@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("./partials/head.ejs")%>
+</head>
+<body>
+<div id="modal-info" class="modal">
+    <div class="modal-content">
+        <span  id="close-info" class="close">&times;</span>
+        <div class="question">
+            <span id="info-message"> </span> <br>
+            <div class="button-group-horizontal">
+                <button id="close-button-info" class="button">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('./partials/navbar.ejs', {page: 'people'}) %>
+<div id="modal-add-person" class="modal">
+    <div class="modal-content">
+        <span id="close" class="close">&times;</span>
+        <section class="inputs-column">
+            <form name="add-new-person-form" id="new-person" class="search-section" action="javascript:void(0);">
+                <input id="person-name" class="dark-input" name="name" type="text" placeholder="Imię"/>
+                <input id="person-surname" class="dark-input" name="surname" type="text" placeholder="Nazwisko"/>
+                <label for="person-time">Wymiar czasu pracy</label>
+                <input min="1" max="24" id="person-time" class="dark-input" name="time" type="number"/>
+            </form>
+            <span id="error-message" class="error"></span>
+            <div class="button-group-horizontal">
+                <button id="add-save" type="submit" form="add-new-person-form" class="button button-add">Zatwierdź</button>
+                <button id="cancel" type="button" class="button no">Anuluj</button>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="filler"></div>
+<!--<div id="modal-error" class="modal">-->
+<!--    <div class="modal-content">-->
+<!--        <span  id="close-x" class="close">&times;</span>-->
+<!--        <div class="question">-->
+<!--            <span id="message-error"></span> <br>-->
+<!--            <div class="button-group-horizontal">-->
+<!--                <button id="close-button" class="button">Ok</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<main class="main-board">
+    <% if (privileged) { %>
+    <button class="fob button" id="add-new-person"><div class="plus">+</div></button>
+    <% } %>
+    <article class="main-container board start">
+        <div class="search-bar">
+            <img src="../img/search.svg" />
+
+            <form id="search-people-form" action="https://localhost:4000/people-search-request" method="GET" class="search-section">
+                <input id="search-bar-people" name="search" type="text" placeholder="Wyszukaj..."/>
+                <div id="search-result"></div>
+            </form>
+            <button id="search-button" type="submit" form="search-people-form" class="button">Wyszukaj</button>
+        </div>
+        <section class="list">
+            <% for (person of peopleList) { %>
+            <a class="list-item" href="https://localhost:4000/profile?user=<%= person.id %>">
+                <img src="../img/icons/<%= person.profile_picture %>" />
+                <h4><%= person.username.replace("_", " ") %> </h4> <!-- = escapes html!!! -->
+            </a>
+            <% } %>
+        </section>
+    </article>
+</main>
+<script src="../js/list.js"></script>
+<script src="../js/people.js"></script>
+</body>
+</html>

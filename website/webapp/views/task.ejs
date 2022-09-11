@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("./partials/head.ejs")%>
+</head>
+<body>
+<!--<div id="modal-error" class="modal">-->
+<!--    <div class="modal-content">-->
+<!--        <span  id="close-x" class="close">&times;</span>-->
+<!--        <div class="question">-->
+<!--            <span id="message-error"></span> <br>-->
+<!--            <div class="button-group-horizontal">-->
+<!--                <button id="close-button" class="button">Ok</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+    <div id="modal-confirm" class="modal">
+        <div class="modal-content" id="content-confirm">
+            <span id="close-delete" class="close">&times;</span>
+            <div class="question">
+                Czy na pewno chcesz usunąć zadanie <i>#<%= taskId %> <%= taskName %></i>? <br>
+                <div class="button-group-horizontal">
+                    <button id="confirm-delete" class="button">Tak</button>
+                    <button id="cancel-delete" class="button no">Nie</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-task-edit" class="modal">
+        <div class="modal-content">
+            <span id="close" class="close">&times;</span>
+            <section class="inputs-column">
+            <form id="edit-task-form" class="search-section" action="javascript:void(0);">
+                <input id="task-name" class="dark-input" name="name" type="text" placeholder="Nazwa zadania"/>
+                <input id="task-assignee" class="dark-input" name="assignee" type="text" placeholder="Wykonawca"/>
+                <div id="search-result-assignee"></div>
+                <input id="task-time" class="dark-input" name="time" type="text" placeholder="hh:mm"/>
+                <input id="task-date" class="dark-input" name="date" type="date"/>
+                <textarea id="task-description" class="dark-input" name="description" placeholder="Opis zadania"></textarea>
+                <div class="icons-skills">
+                    <div class="edit-skills">
+                        <img src="../img/add.svg">
+                        <button id="new-skill">Dodaj nową umiejętność</button>
+                    </div>
+                </div>
+                <section id="skills-modal-edit" class="skills skills-modal">
+                    <% for (skill of skillsList) { %>
+                        <div class="skill-element" id="skill-element-<%= skill.id %>">
+                            <div class="skill-indicator-little">
+                            <div class="skill-name"><%= skill.name %></div>
+                                <span id="<%= skill.id %>-delete" class="delete-skill">-</span>
+                            </div>
+                        </div>
+                    <% } %>
+                </section>
+            </form>
+            <span id="error-message" class="error"></span>
+            <div class="button-group-horizontal">
+                <button id="search-button" type="submit" form="edit-task-form" class="button button-add">Zapisz</button>
+                <button id="cancel" type="button" class="button no">Anuluj</button>
+            </div>
+            </section>
+        </div>
+    </div>
+    <div id="modal-skills-new" class="modal">
+        <div class="modal-content">
+            <span id="close-new" class="close">&times;</span>
+            <form id="search-skills-form" class="search-section" action="javascript:void(0);">
+                <input id="search-bar-skills" name="skillName" type="text" placeholder="Nazwa umiejętności"/>
+                <div id="search-result"></div>
+            </form>
+            <button id="search-button-new" type="submit" form="search-skills-form" class="button button-add">Dodaj</button>
+        </div>
+    </div>
+    <%- include('./partials/navbar.ejs', {page: 'task'}) %>
+<!--    <div class="filler"></div>-->
+    <main>
+        <div class="task-container">
+            <div class="options-task">
+                <div class="edit-skills edit-task">
+                    <img src="../img/edit.svg">
+                    <button id="edit">Edytuj</button>
+                </div>
+                <div class="edit-skills delete-task">
+                    <img src="../img/delete.svg">
+                    <button id="delete">Usuń zadanie</button>
+                </div>
+            </div>
+            <img class="avatar" src="../img/<%= taskStatus %>.svg" />
+            <article class="main-container">
+                <h1>#<%= taskId %> <%= taskName %></h1>
+                <div class="owner">Wykonawca:
+                    <% if (assignee === undefined) { %> nie przypisano <% } else { %>
+                        <%= assignee.replace("_", " ") %>
+                    <% } %>
+                </div>
+                <div class="owner">Szacowany czas:
+                    <% let tmp = estimatedTime.split(":"); tmp[0] = parseInt(tmp[0]);
+                    tmp[1] = parseInt(tmp[1])%>
+                    <% if (tmp[0] !== 0) { %>
+                        <%= parseInt(tmp[0]) %>h
+                    <% } %>
+                    <% if (tmp[1] !== 0) { %>
+                        <%= parseInt(tmp[1]) %> min
+                    <% } %>
+                </div>
+                <div class="owner">Termin wykonania:
+                    <%= deadline %>
+                </div>
+               <div class="flex-row padding">
+                   <section class="skills skills-task">
+                       <h4 id="skills-details" class="info">Wymagane umiejętności:</h4>
+                       <div id="skills-details-box">
+                       <% if (skillsList.length === 0) { %>
+                       <div class="skill-element">
+                           <span class="info">
+                               Brak umiejętności
+                           </span>
+                       </div>
+                       <% } %>
+                       <% for (skill of skillsList) { %>
+                           <div class="skill-element">
+                               <span class="info"> <%= skill.name %> </span>
+                           </div>
+                       <% } %>
+                       </div>
+                   </section>
+                   <section class="description">
+                       <% if (description !== "") { %>
+                        <%= description %>
+                       <% } else { %>
+                            Brak opisu
+                       <% } %>
+
+                   </section>
+               </div>
+            </article>
+        </div>
+    </main>
+    <script>
+        let taskId = <%= taskId %>;
+        let taskName = "<%= taskName %>";
+        let assignee = "<%= assignee %>";
+        assignee = ((assignee === "undefined") ? "" : assignee.replace('_', ' '));
+        let taskDate = "<%= deadlineFormat %>";
+        let taskTime = "<%= estimatedTime %>";
+        let description = "<%= description %>";
+    </script>
+    <script src="../js/task.js"></script>
+</body>
+</html>

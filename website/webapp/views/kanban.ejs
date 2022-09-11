@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<!--    <link rel="stylesheet" type="text/css" href="dist/dragula.css"/>-->
+    <%- include("./partials/head.ejs")%>
+</head>
+<body>
+<!--<div id="modal-error" class="modal">-->
+<!--    <div class="modal-content">-->
+<!--        <span  id="close-x" class="close">&times;</span>-->
+<!--        <div class="question">-->
+<!--            <span id="message-error"></span> <br>-->
+<!--            <div class="button-group-horizontal">-->
+<!--                <button id="close-button" class="button">Ok</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<div id="modal-task-edit" class="modal">
+    <div class="modal-content">
+        <span id="close" class="close">&times;</span>
+        <section class="inputs-column">
+            <form id="edit-task-form" class="search-section" action="javascript:void(0);">
+                <input id="task-name" class="dark-input" name="name" type="text" placeholder="Nazwa zadania"/>
+                <input id="task-assignee" class="dark-input" name="assignee" type="text" placeholder="Wykonawca"/>
+                <div id="search-result-assignee"></div>
+                <input id="task-time" class="dark-input" name="time" type="text" placeholder="hh:mm"/>
+                <input id="task-date" class="dark-input" name="date" type="date"/>
+                <textarea id="task-description" class="dark-input" name="description" placeholder="Opis zadania"></textarea>
+                <div class="icons-skills">
+                    <div class="edit-skills">
+                        <img src="../img/add.svg">
+                        <button id="new-skill">Dodaj nową umiejętność</button>
+                    </div>
+                </div>
+                <section id="skills-modal-edit" class="skills skills-modal">
+
+                </section>
+            </form>
+            <span id="error-message" class="error"></span>
+            <div class="button-group-horizontal">
+                <button id="search-button" type="submit" form="edit-task-form" class="button button-add">Zapisz</button>
+                <button id="cancel" type="button" class="button no">Anuluj</button>
+            </div>
+        </section>
+    </div>
+</div>
+<div id="modal-skills-new" class="modal">
+    <div class="modal-content">
+        <span id="close-new" class="close">&times;</span>
+        <form id="search-skills-form" class="search-section" action="javascript:void(0);">
+            <input id="search-bar-skills" name="skillName" type="text" placeholder="Nazwa umiejętności"/>
+            <div id="search-result"></div>
+        </form>
+        <button id="search-button-new" type="submit" form="search-skills-form" class="button button-add">Dodaj</button>
+    </div>
+</div>
+<%- include('./partials/navbar.ejs', {page: 'kanban'}) %>
+<div class="filler"></div>
+<main class="main-board">
+    <button class="fob button"><div class="plus">+</div></button>
+    <article class="main-container board">
+        <div class="options-group">
+            <a href="https://localhost:4000/kanban?filter=all">
+                <button type="button" class="option <% if (active === 'all') { %>selected-option <% } %>">
+                    Wszystkie
+                </button>
+            </a>
+            <a href="https://localhost:4000/kanban?filter=mine">
+                <button type="button" class="option <% if (active === 'mine') { %>selected-option <% } %>">
+                    Przypisane do mnie
+                </button>
+            </a>
+            <a href="https://localhost:4000/kanban?filter=none">
+                <button type="button" class="option <% if (active === 'none') { %>selected-option <% } %>">
+                    Nieprzypisane
+                </button>
+            </a>
+        </div>
+        <div class="drag-container">
+            <ul class="drag-list">
+                <li class="drag-column drag-column-to-do">
+                    <div class="flex-row">
+                        <img src="../img/todo.svg" />
+                        <h4>Oczekujące</h4>
+                    </div>
+                    <ul class="drag-inner-list" id="todo">
+                        <% for (let element of todo) { %>
+                            <li class="drag-item" id="task-<%= element.id %>">
+                                <div class="flex-column">
+                                    <h5 class="task-name"> #<%= element.id %> <%= element.name %></h5>
+                                    <div class="owner">Wykonawca:
+                                        <% if (!element.username) { %> nie przypisano <% } else { %>
+                                        <%= element.username.replace("_", " ") %>
+                                        <% } %>
+                                    </div>
+                                    <div class="owner">Szacowany czas:
+                                        <% let tmp = element.estimated_time.split(":"); tmp[0] = parseInt(tmp[0]);
+                                        tmp[1] = parseInt(tmp[1])%>
+                                        <% if (tmp[0] !== 0) { %>
+                                            <%= parseInt(tmp[0]) %>h
+                                        <% } %>
+                                        <% if (tmp[1] !== 0) { %>
+                                            <%= parseInt(tmp[1]) %> min
+                                        <% } %>
+                                    </div>
+                                    <a class="details" href="https://localhost:4000/task?id=<%= element.id %>">Szczegóły...</a>
+                                </div>
+                            </li>
+                        <% } %>
+                    </ul>
+                </li>
+                <div class="vr"></div>
+                <li class="drag-column drag-column-in-progress">
+                    <div class="flex-row">
+                        <img src="../img/inprogress.svg" />
+                        <h4>W trakcie</h4>
+                    </div>
+                    <ul class="drag-inner-list" id="inprogress">
+                        <% for (let element of inprogress) { %>
+                            <li class="drag-item" id="task-<%= element.id %>">
+                                <div class="flex-column">
+                                    <h5 clas="task-name"> #<%= element.id %> <%= element.name %></h5>
+                                    <div class="owner">Wykonawca:
+                                        <% if (!element.username) { %> nie przypisano <% } else { %>
+                                            <%= element.username.replace("_", " ") %>
+                                        <% } %>
+                                    </div>
+                                    <div class="owner">Szacowany czas:
+                                        <% let tmp = element.estimated_time.split(":"); tmp[0] = parseInt(tmp[0]);
+                                            tmp[1] = parseInt(tmp[1])%>
+                                        <% if (tmp[0] !== 0) { %>
+                                            <%= parseInt(tmp[0]) %>h
+                                        <% } %>
+                                        <% if (tmp[1] !== 0) { %>
+                                            <%= parseInt(tmp[1]) %> min
+                                        <% } %>
+                                    </div>
+                                    <a class="details" href="https://localhost:4000/task?id=<%= element.id %>">Szczegóły...</a>
+                                </div>
+                            </li>
+                        <% } %>
+                    </ul>
+                </li>
+                <div class="vr"></div>
+                <li class="drag-column drag-column-done">
+				    <div class="flex-row">
+                        <img src="../img/done.svg" />
+                        <h4>Zakończone</h4>
+                    </div>
+                    <ul class="drag-inner-list" id="done">
+                        <% for (let element of done) { %>
+                            <li class="drag-item" id="task-<%= element.id %>">
+                                <div class="flex-column">
+                                    <h5 clas="task-name"> #<%= element.id %> <%= element.name %></h5>
+                                    <div class="owner">Wykonawca:
+                                        <% if (!element.username) { %> nie przypisano <% } else { %>
+                                            <%= element.username.replace("_", " ") %>
+                                        <% } %>
+                                    </div>
+                                    <div class="owner">Szacowany czas:
+                                        <% let tmp = element.estimated_time.split(":"); tmp[0] = parseInt(tmp[0]);
+                                            tmp[1] = parseInt(tmp[1])%>
+                                        <% if (tmp[0] !== 0) { %>
+                                            <%= parseInt(tmp[0]) %>h
+                                        <% } %>
+                                        <% if (tmp[1] !== 0) { %>
+                                            <%= parseInt(tmp[1]) %> min
+                                        <% } %>
+                                    </div>
+                                    <a class="details" href="https://localhost:4000/task?id=<%= element.id %>">Szczegóły...</a>
+                                </div>
+                            </li>
+                        <% } %>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </article>
+</main>
+<script src="../js/cookies.js"></script>
+<script src='dist/dragula.js'></script>
+<script src="../js/kanban.js"></script>
+</body>
+</html>

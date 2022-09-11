@@ -1,0 +1,667 @@
+*:before, *:after  {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  min-height: 100vh;
+  height: 100vh;
+  min-width: 100vw;
+  width: 100vw;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: $background;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  font-family: $primary-font;
+}
+
+.center {
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.background {
+  background: url("../../img/background.svg") no-repeat center center fixed;
+}
+
+main {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //justify-content: center;
+  align-content: center;
+  width: 100%;
+  // height: 100%;
+  height: 91vh;
+  //padding-top: 7vh;
+
+  .vr {
+    height: 90%;
+  }
+}
+
+.no-margin-top {
+  margin-top: 0;
+  justify-content: center;
+  height: 100%;
+}
+
+.filler {
+  height: 3.4em;
+}
+
+.not-scrollable {
+  overflow: hidden;
+}
+
+.button {
+  color: white;
+  background: $tertiary-color;
+  border: 0;
+  border-radius: 1.5em;
+  padding: .7vh 1vw .7vh 1vh;
+  width: fit-content;
+  text-align: center;
+
+  &:hover, &:active  {
+    background: $button-hover;
+  }
+  &:focus {
+    background: $button-pressed;
+  }
+}
+
+input {
+  margin: 1.5vh;
+  padding: .75vh;
+  border-radius: 1.5vw;
+  border: transparent solid .2em;
+  &:focus, &:active {
+    border: $tertiary-color solid .2em;
+  }
+}
+
+.main-container {
+  padding: 0 2vw 4vh 2vw;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  width: fit-content;
+  height: fit-content;
+
+  h1 {
+    font-weight: 400;
+    font-size: 2.5em;
+  }
+
+  hr {
+    height: .1em;
+    border: 0;
+    color: $accents-color;
+    background-color: $accents-color;
+  }
+}
+
+.stats {
+  display: flex;
+  flex-direction: row;
+  color: $secondary-font-color;
+  font-size: 1.5em;
+}
+.stats span {
+  font-size: 3rem;
+  font-weight: 500;
+  margin-top: .2em;
+}
+
+.stats-element {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2vw;
+  padding-bottom: 1vh;
+}
+
+.stats img {
+  width: 11vw;
+  padding-bottom: .2em;
+}
+
+.button-group-horizontal {
+  padding: 7vh 2vw 4vh 2vw;
+  font-size: 1.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  .button {
+    padding: .5em 1em .5em 1em;
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.avatar {
+  border-radius: 50%;
+  // height: 20%;
+  height: 10em;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  padding: 0;
+  margin: 0;
+  transform: translate(0, -50%);
+ // bottom: 70%;
+  position: absolute;
+  //box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
+  z-index: 0;
+  transition: opacity 0.5s linear;
+}
+
+.hidden {
+  opacity: 0;
+  transition:opacity 0.5s linear;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  margin-right: 4vw;
+  padding-top: 5em;
+
+  h1 {
+    font-size: 2em;
+    line-height: 2em;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  h4 {
+    color: $secondary-font-color;
+    font-size: 1em;
+    padding: 0;
+    margin: 0;
+    font-weight: 400;
+    margin-top: -0.5em;
+  }
+
+  .main-container {
+    width: 90%;
+  }
+}
+
+.avatar + .main-container {
+  padding-top: 4em;
+}
+
+.flex-start {
+  justify-self: flex-start;
+}
+
+.task-container {
+  @extend .profile-container;
+  margin: auto;
+  margin-top: 11vh;
+  width: 70%;
+
+  .main-container {
+    padding-right: 4em;
+    padding-left: 4em;
+    padding-bottom: 2em;
+  }
+}
+
+.owner {
+  color: $secondary-font-color;
+  font-size: 1.2em;
+}
+
+.padding {
+  width: 90%;
+  padding-top: 2em;
+  font-size: 1.2rem !important;
+  //justify-content: space-between !important;
+
+  .skills {
+    width: 50%;
+  }
+}
+
+.description {
+  justify-self: flex-start;
+  align-self: flex-start;
+  margin-top: 2em;
+  text-align: justify;
+  text-justify: inter-word;
+  font-size: 1.3em;
+  padding-left: 3em;
+  margin-left: 2em;
+  width: 100%;
+}
+
+
+.info {
+  text-align: justify;
+  //text-justify: inter-word;
+  padding-bottom: 1em;
+  width: 100%;
+  //font-size: 1.3em;
+}
+
+.fob {
+  border-radius: 50%;
+  position: fixed;
+  height: 3.5em;
+  width: 3.5em;
+  bottom: 4vh;
+  right: 4vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin: 0;
+  padding: 0;
+
+  .plus {
+    font-size: 3em;
+    padding: 0;
+    padding-bottom: .12em;
+    margin: 0;
+  }
+}
+
+.options-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.option {
+  text-align: center;
+  padding-right: 1em;
+  padding-left: 1em;
+  cursor: pointer;
+  @extend .button;
+  color: $secondary-font-color;
+  background: none;
+  margin: .5em;
+
+  &:hover {
+    background: $tertiary-color;
+    color: white;
+  }
+
+  &:focus {
+    background: $tertiary-color;
+    color: white;
+  }
+}
+
+.selected-option {
+  background: $tertiary-color;
+  color: white;
+}
+
+
+.team-container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  padding-top: 5em;
+  overflow-x: hidden;
+
+  h1 {
+    font-size: 2em;
+    line-height: 2em;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  h4 {
+    color: $secondary-font-color;
+    font-size: 1em;
+    padding: 0;
+    margin: 0;
+    font-weight: 400;
+    margin-top: -0.5em;
+  }
+
+  img {
+    border-radius: 50%;
+    height: 10em;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  align-content: center;
+}
+
+.center-self {
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  justify-self: center !important;
+  align-self: center !important;
+}
+
+.finish-date {
+  color: $secondary-font-color;
+  padding-top: 0;
+  margin-top: 0;
+  font-size: 1.5em;
+}
+
+.no-padding {
+  padding-bottom: 0.2em;
+  margin-bottom: 0;
+}
+
+.admin {
+  width: 100%;
+}
+
+.error {
+  color: red;
+  font-weight: 500;
+}
+
+#modal-skills {
+  .modal-content {
+    min-width: 25vw;
+  }
+}
+
+//#search-bar-skills {
+//  background: $card-background;
+//}
+
+#search-skills-form {
+  input {
+    background: $card-background;
+    width: 25vw;
+  }
+}
+
+.button-add {
+  padding: .4em .8em .4em .8em;
+  text-align: center;
+  float: right;
+}
+
+#close-button {
+  padding: .4em .8em .4em .8em;
+  text-align: center;
+}
+
+#modal-error {
+  z-index: 5;
+  .question {
+    font-size: 1.3em;
+  }
+}
+
+.skills-task {
+  width: 100%;
+}
+
+.options-task {
+  align-self: flex-end;
+  position: absolute;
+  top: 10vh;
+  display: flex;
+  flex-direction: row;
+}
+
+#content-confirm {
+  width: 30vw;
+
+  .button {
+    padding-top: .2em;
+    padding-bottom: .2em;
+  }
+}
+
+.edit-task {
+
+}
+
+.delete-task {
+}
+
+.dark-input {
+  background: $card-background;
+}
+
+#skills-details {
+  font-size: 1.1em;
+  padding-bottom: .5em;
+  width: 100%;
+}
+
+textarea {
+  @extend input;
+}
+
+#skills-details-box {
+  overflow-x: auto;
+  padding: 1em;
+  height: 30vh;
+}
+
+.link-back {
+  color: $tertiary-color;
+
+  &:hover, &active {
+    color: $primary-color;
+  }
+}
+
+.change-password {
+  input[type=password] {
+    background: $card-background;
+  }
+
+  .button {
+    padding: .4em .8em .4em .8em;
+  }
+}
+
+.logout {
+  text-decoration: none;
+}
+
+#modal-info {
+  .question {
+    font-size: 1.3em;
+  }
+  .modal-content {
+    width: 30vw;
+  }
+}
+
+#modal-info-total {
+  @extend #modal-info;
+
+  .modal-content {
+    width: 40vw;
+  }
+}
+
+#modal-add-person {
+  label {
+    margin-left: 1em;
+  }
+}
+
+.active-card {
+  @extend .active;
+  color: $tertiary-color !important;
+}
+
+.assets-box {
+  #search-result {
+    top: 29vh;
+    margin-left: 0;
+    width: 14.5%;
+  }
+}
+
+.options-assigment {
+  @extend .options-task;
+  margin-top: 2vh;
+  justify-self: flex-end;
+  float: right;
+  right: 10vw;
+}
+
+#text-version {
+  @extend #delete;
+}
+
+#accept-matching {
+  @extend #delete;
+}
+
+#swap {
+  display: none;
+}
+
+#modal-text {
+  .modal-content {
+    width: fit-content;
+
+    .question {
+      text-align: center;
+      font-size: 1.2em;
+
+      .arrow {
+        color: $tertiary-color;
+        padding-right: 1em;
+        padding-left: 1em;
+      }
+    }
+  }
+}
+
+.alert-icon {
+  cursor: pointer;
+  padding-right: .3em;
+  color: red;
+  font-weight: 500;
+  font-size: 1.2em;
+
+  &:hover {
+    color: $secondary-color;
+  }
+}
+
+#name-h {
+  display: flex;
+  flex-direction: row;
+  border: red solid 3px;
+}
+
+.task-list {
+  list-style-type: square;
+  margin-left: 1.5em;
+  margin-right: 1.5em;
+}
+
+.state {
+  @extend .finish-date;
+  color: $tertiary-color;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+.drag-list-simulation {
+  @extend .drag-list-assigment;
+}
+
+.people-in-project-list {
+  @extend .drag-list-assigment;
+  width: 100%;
+}
+
+.container-used {
+  @extend .assigment-container-graph;
+  width: 80% !important;
+}
+
+#search-result-simulation {
+  @extend #search-result;
+  top: 24vh !important;
+}
+
+.skills-list {
+  @extend .task-list;
+}
+
+.help-section {
+  .header-help {
+    font-size: 1.3em;
+    margin-bottom: 0;
+    text-align: left;
+    color: $primary-font-color;
+
+    &:before {
+      font-size: 2em;
+      content: '•';
+      vertical-align: -10%;
+      margin-right: .2em;
+      color: $secondary-color;
+    }
+  }
+}
+
+.help-container {
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 80%;
+  margin-top: 2em;
+  font-size: 1.3em;
+  color: $secondary-font-color;
+}

@@ -1,0 +1,346 @@
+@media only screen and (max-width: 900px) {
+
+  .main-assigment {
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin: auto;
+  }
+
+  .main-container {
+    padding: 0;
+    margin: auto;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+  }
+
+  .assets-box {
+    width: 90%;
+    margin-top: 15em;
+  }
+
+  .search-bar {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+  }
+
+  #search-bar-input {
+    width: 40%;
+  }
+
+  #search-result-simulation {
+    top: 33vh !important;
+    width: 38vw !important;
+    margin-right: 15% !important;
+  }
+
+  .drag-container-assigment {
+    height: fit-content;
+  }
+
+  .drag-list-simulation {
+    height: fit-content;
+  }
+
+  .modal-content {
+    max-height: 60vh;
+    overflow-y: auto;
+    width: 70vw !important;
+  }
+
+  .container-used {
+    width: 100% !important;
+  }
+
+  .drag-container-assigment-main {
+    width: 80% !important;
+  }
+
+  .center {
+    width: 85%;
+    margin: auto;
+  }
+
+  .no-padding {
+    font-size: 1.8em !important;
+  }
+
+  .finish-date {
+    font-size: 1.4em;
+  }
+
+  .state {
+    font-size: 1.4em;
+  }
+
+  .stats {
+    padding-bottom: 1em;
+
+    .stats-element {
+      font-size: .8em;
+
+      span {
+        font-size: 1.8em;
+      }
+    }
+  }
+
+  #new {
+    font-size: .8em;
+  }
+
+  .drag-list {
+    flex-direction: column;
+  }
+
+  .vr {
+    display: none;
+  }
+
+  .drag-column {
+    img {
+      width: 2em;
+    }
+    h4 {
+      font-size: 1.5em;
+    }
+  }
+
+  .drag-inner-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .drag-column {
+    width: 100%;
+  }
+
+  .drag-column-in-progress {
+    border-bottom: $accents-color solid 2px !important;
+  }
+
+  .drag-column-to-do {
+    border-bottom: $accents-color solid 2px !important;
+  }
+
+  .drag-item {
+    width: 40%;
+    margin-right: 1.1em;
+   // margin: 0;
+  }
+
+  .task-name {
+    font-size: 1.2em !important;
+  }
+
+  .options-group {
+    margin-top: 1em;
+  }
+
+  .inputs-column {
+    width: 100%;
+  }
+
+  #modal-skills-new {
+    button {
+      margin-right: 10%;
+    }
+
+    #search-bar-skills {
+      width: 80%;
+    }
+  }
+
+  #search-bar-people {
+    width: 70%;
+  }
+
+  #search-result {
+    top: 20vh !important;
+    width: 45vw !important;
+    margin-left: 2% !important;
+  }
+
+  .list-item img {
+    width: 4.5em;
+    height: 4.5em;
+  }
+
+  .list-item {
+    margin: 1em;
+  }
+
+  .list {
+    justify-content: center;
+    padding-top: 2em;
+  }
+
+  .start {
+    margin-top: 5%;
+  }
+
+  .generate-question {
+    font-size: 1.2em;
+  }
+
+  .arrow {
+    padding-left: 0.2em !important;
+    padding-right: 0.2em !important;
+  }
+
+  #login-form {
+    width: 60%;
+    input {
+      width: 80%;
+    }
+  }
+
+  .margin-assign {
+    padding-top: 0;
+    margin-top: 0;
+    width: 80%;
+  }
+
+  .no-top {
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  .drag-container-assigment-main {
+    margin-top: 5em;
+    padding-top: 0;
+    justify-content: flex-start !important;
+    align-content: flex-start !important;
+    align-items: flex-start !important;
+  }
+
+  .assigment-container-graph {
+    margin-top: -4em;
+    padding-top: 0;
+  }
+
+  .drag-list-assigment {
+    height: 25vh;
+  }
+
+  #swap {
+    display: block;
+    padding-right: .8em;
+    padding-left: .8em;
+    margin-top: 1.5em;
+    float: right;
+    margin-right: 2em;
+  }
+
+  .options-assigment {
+    margin-top: 4em;
+  }
+
+  .not-visible {
+    display: none;
+  }
+
+  .profile-flex {
+    flex-direction: column;
+  }
+
+  .profile-container {
+    margin-top: 28em;
+  }
+
+  .delete-profile {
+    margin-top: 1.5em;
+  }
+
+  #more {
+    margin-right: -2em;
+    font-size: .95em;
+  }
+
+  #stats-header {
+    font-size: 1.8em;
+  }
+
+  .icon-element-img {
+    height: 5em;
+    width: 5em !important;
+    margin: .5em !important;
+  }
+
+  #modal-icons {
+    button {
+      padding-top: 0.2em;
+      padding-bottom: .2em;
+    }
+  }
+
+  #skills-modal-display {
+    .skill-element {
+      .skill-indicator {
+        font-size: 3.5em;
+      }
+    }
+  }
+
+  #modal-skills {
+    .modal-content {
+      width: fit-content !important;
+    }
+  }
+
+  #modal-skills-edit {
+    .modal-content {
+      width: fit-content !important;
+    }
+
+    .skill-element {
+      .skill-indicator {
+        font-size: 3.5em;
+      }
+    }
+
+    .delete-skill {
+      margin-left: 0.2em;
+    }
+  }
+
+  .board {
+    width: 100%;
+  }
+
+  .profile-skills {
+    #search-result {
+      top: 50vh !important;
+    }
+  }
+
+  .help-section {
+    .header-help {
+      font-size: 1.2em;
+
+      &:before {
+        font-size: 1.8em;
+      }
+    }
+  }
+
+  .help-container {
+    width: 90%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    margin-top: 1em;
+    text-align: left;
+  }
+}
+

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("./partials/head.ejs")%>
+</head>
+<body>
+<%- include('./partials/navbar.ejs', {page: 'state'}) %>
+<div id="modal-info-total" class="modal">
+    <div class="modal-content">
+        <span  id="close-x-info" class="close">&times;</span>
+        <div class="question">
+                <span id="message-info">
+                    Użytkownicy nie są w stanie zrealizować następujących zadań w swoich godzinach pracy
+                    przed terminem ich wykonania:
+                    <ul class="task-list">
+                    </ul>
+                    <br>
+                    Aby móć zrealizować projekt terminowo, zatrudnij osoby o następujących umiejętnościach:
+                    <ul class="skills-list">
+                    </ul>
+                </span> <br>
+            <div class="button-group-horizontal">
+                <button id="close-info" class="button">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="filler"></div>
+<main class="main-assigment">
+    <article class="main-container assets-box">
+        <div class="search-bar">
+            <img src="../img/search.svg" />
+            <input id="search-bar-input" name="search" type="text" placeholder="Wyszukaj..."/>
+            <div id="search-result-simulation"></div>
+            <button id="search-cards" class="button">Wyszukaj</button>
+        </div>
+        <div class="drag-container-assigment">
+            <div class="drag-list-simulation">
+                <% if (peopleList) { %>
+                    <% for (let person of peopleList) { %>
+                        <div class="profile-item list-item" id="<%= person.id %>-left">
+                            <img src="../img/icons/<%= person.profile_picture %>" />
+                            <h5><%= person.username.replace('_', " ") %></h5>
+                        </div>
+                    <% } %>
+                <% }%>
+            </div>
+        </div>
+        <button class="button" id="check">Sprawdź wykonalność</button>
+    </article>
+    <div class="vr"></div>
+    <article class="main-container drag-container-assigment-main">
+        <div class="container-used">
+            <h2>Osoby pracujące w projekcie</h2>
+            <div class="people-in-project-list">
+                <% if (peopleUsed) { %>
+                    <% for (let person of peopleUsed) { %>
+                        <div class="profile-item list-item" id="<%= person.id %>-left">
+                            <img src="../img/icons/<%= person.profile_picture %>" />
+                            <h5><%= person.username.replace('_', " ") %></h5>
+                        </div>
+                    <% } %>
+                <% }%>
+            </div>
+        </div>
+        </div>
+    </article>
+</main>
+<script src='dist/dragula.js'></script>
+<script src='../js/project_overview.js'></script>
+</body>
+</html>

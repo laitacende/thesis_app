@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("./partials/head.ejs")%>
+</head>
+<body>
+<%- include('./partials/navbar.ejs', {page: 'assigment'}) %>
+<div id="modal-confirm" class="modal">
+    <div class="modal-content" id="content-confirm">
+        <span id="close-delete" class="close">&times;</span>
+        <div class="question generate-question">
+            Czy na pewno chcesz zaakceptować przydział?
+            <div class="button-group-horizontal">
+                <button id="confirm-delete" class="button">Tak</button>
+                <button id="cancel-delete" class="button no">Nie</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-text" class="modal">
+    <div class="modal-content">
+        <span  id="close-x-text" class="close">&times;</span>
+        <div class="question">
+            <span id="message-txt"></span> <br>
+            <div class="button-group-horizontal">
+                <button id="close-button-txt" class="button">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="filler"></div>
+<!--<div id="swap-option" class="edit-skills delete-task">-->
+<!--    <img src="../img/swap.svg">-->
+<!--    <button id="swap">Zmień widok</button>-->
+<!--</div>-->
+<button id="swap" class="button">Zmień widok</button>
+<main class="main-assigment margin-assign">
+   <article class="main-container assets-box no-top">
+       <div class="cards">
+           <div class="option-card active-card" id="people-button">Osoby</div>
+           <div class="option-card" id="task-button">Zadania</div>
+       </div>
+       <div class="search-bar">
+           <img src="../img/search.svg" />
+           <input id="search-bar-input" name="search" type="text" placeholder="Wyszukaj..."/>
+           <div id="search-result"></div>
+           <button id="search-cards" class="button">Wyszukaj</button>
+       </div>
+       <div class="drag-container-assigment">
+           <div class="drag-list-assigment">
+               <% if (peopleList) { %>
+                <% for (person of peopleList) { %>
+                       <div class="profile-item list-item" id="<%= person.id %>-left">
+                           <img src="../img/icons/<%= person.profile_picture %>" />
+                           <h5><%= person.username.replace('_', " ") %></h5>
+                       </div>
+                <% } %>
+               <% }%>
+           </div>
+       </div>
+        <button class="button" id="generate">Wygeneruj przydział</button>
+   </article>
+    <div class="vr"></div>
+    <article class="main-container drag-container-assigment-main not-visible">
+        <div class="options-assigment">
+            <div class="edit-skills delete-task">
+                <img src="../img/text.svg">
+                <button id="text-version">Wersja tekstowa</button>
+            </div>
+            <div id="accept-option" class="edit-skills delete-task">
+                <img src="../img/accept.svg">
+                <button id="accept-matching">Zaakceptuj przydział</button>
+            </div>
+        </div>
+        <div class="assigment-container-graph people-graph">
+            <h2>Osoby</h2>
+            <div class="assigment-left">
+
+            </div>
+        </div>
+        <div class="assigment-container-graph">
+            <h2>Zadania</h2>
+            <div class="assigment-right">
+
+            </div>
+        </div>
+    </article>
+</main>
+<script src="../js/textFit.js"></script>
+<script src="../js/leader-line.min.js"></script>
+<script src='dist/dragula.js'></script>
+<script src="../js/assignment.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<div id="modal-error" class="modal">
+    <div class="modal-content">
+        <span  id="close-x" class="close">&times;</span>
+        <div class="question">
+            <span id="message-error"></span> <br>
+            <div class="button-group-horizontal">
+                <button id="close-button" class="button">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav>
+    <input id="menu-toggle" type="checkbox" />
+    <label class="menu-icon" for="menu-toggle">
+        <span></span>
+    </label>
+
+    <ul class="menu-box">
+        <li><a class="menu-item <% if (page === 'home') { %> active <% } %>" href="https://localhost:4000/home">Strona główna</a></li>
+        <li><a class="menu-item <% if (page === 'kanban') { %> active <% } %>" href="https://localhost:4000/kanban?filter=all">Zadania</a></li>
+        <li><a class="menu-item <% if (page === 'people') { %> active <% } %>" href="https://localhost:4000/people">Osoby</a></li>
+        <% if (privileged === "1") { %>
+            <li><a class="menu-item <% if (page === 'assigment') { %> active <% } %>" href="https://localhost:4000/assignment">Generowanie przydziału</a></li>
+         <% } %>
+        <li><a class="menu-item <% if (page === 'profile') { %> active <% } %>" href="https://localhost:4000/profile?user=<%= userId %>&back=false">Profil</a></li>
+        <li><a class="menu-item <% if (page === 'help') { %> active <% } %>" href="https://localhost:4000/help">Pomoc</a></li>
+        <li><a class="menu-item <% if (page === 'about') { %> active <% } %>" href="https://localhost:4000/about">O narzędziu</a></li>
+    </ul>
+    <div class="overlay"></div>
+    <div class="nav-container">
+        <div class="flex-row">
+            <h3>Nazwa</h3>
+            <% if (displayBack) { %><div class="back-icon"></div> <% } %>
+        </div>
+        <div class="flex-row">
+            <a class="logout" href="https://localhost:4000/change-password">Zmień hasło</a>
+            <a class="logout" id="logout">Wyloguj</a>
+        </div>
+    </div>
+</nav>
+<script src="../../js/navbar.js"></script>
+<!--<% if (page === 'profile' || page === 'task' || page === '') { %> <script src="../../js/navbar.js"></script> <% } %>-->

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("./partials/head.ejs")%>
+</head>
+<body>
+<div id="modal-skills" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="question">
+            Czy na pewno chcesz usunąć istniejący projekt i stworzyć nowy? <br>
+            <div class="button-group-horizontal">
+                <button type="button" id="yes" class="button">Tak</button>
+                <button type="button" class="button no">Nie</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <%- include('./partials/navbar.ejs', {page: 'home'}) %>
+    <div class="filler"></div>
+    <main class="center">
+        <article class="main-container">
+            <h1 class="no-padding">Postęp w projekcie</h1>
+            <div class="finish-date">Planowane zakończenie projektu: <%= finishDate %></div>
+            <% if (privileged === "1") { %>
+                <a class="state" href="/project-state">Stan projektu</a>
+            <% } %>
+            <section class="stats">
+                <div class="stats-element">
+                    <img src="../img/todo.svg" />
+                    Oczekujących
+                    <span><%= todoCounter %></span>
+                </div>
+                <div class="stats-element">
+                    <img src="../img/inprogress.svg" />
+                    W trakcie
+                    <span><%= inprogressCounter %></span>
+                </div>
+                <div class="stats-element">
+                    <img src="../img/done.svg" />
+                    Zakończonych
+                    <span><%= doneCounter %></span>
+                </div>
+            </section>
+            <% if (privileged === "1") { %>
+            <section class="admin">
+                <hr>
+                <div class="button-group-horizontal">
+<!--                    <button class="button">Zarządzaj zadaniami</button>-->
+<!--                    <button class="button">Zarządzaj osobami</button>-->
+                    <button class="button" id="new">Stwórz nowy projekt</button>
+                </div>
+            </section>
+            <% } %>
+        </article>
+    </main>
+<script src="../js/main_panel.js"></script>
+</body>
+</html>

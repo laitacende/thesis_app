@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("./partials/head.ejs")%>
+</head>
+<body>
+<!--<div id="modal-error" class="modal">-->
+<!--    <div class="modal-content">-->
+<!--        <span  id="close-x" class="close">&times;</span>-->
+<!--        <div class="question">-->
+<!--            <span id="message-error"></span> <br>-->
+<!--            <div class="button-group-horizontal">-->
+<!--                <button id="close-button" class="button">Ok</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<% if (tasksStop.length !== 0) { %>
+    <div id="modal-info" class="modal">
+        <div class="modal-content">
+            <span  id="close-x-info" class="close">&times;</span>
+            <div class="question">
+                <span id="message-info">
+                    Użytkownik nie jest w stanie zrealizować następujących zadań w swoich godzinach pracy
+                    przed terminem ich wykonania:
+                    <ul class="task-list">
+                        <% for (task of tasksStop) { %>
+                            <li>#<%= task.id %> <%= task.name %></li>
+                        <% } %>
+                    </ul>
+                </span> <br>
+                <div class="button-group-horizontal">
+                    <button id="close-info" class="button">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<% } %>
+<div id="modal-confirm" class="modal">
+    <div class="modal-content" id="content-confirm">
+        <span id="close-delete" class="close">&times;</span>
+        <div class="question">
+            Czy na pewno chcesz usunąć swój profil? <br>
+            <div class="button-group-horizontal">
+                <button id="confirm-delete" class="button">Tak</button>
+                <button id="cancel-delete" class="button no">Nie</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-icons" class="modal">
+    <div class="modal-content">
+        <span id="close-icons" class="close">&times;</span>
+        <div class="profile-icons">
+            <% for (icon of iconsList) { %>
+                <img class="icon-element-img <% if (profilePicture === icon) { %> chosen <% } %>" src="../img/icons/<%= icon %>">
+            <% } %>
+        </div>
+        <div class="button-group-horizontal">
+            <button id="save" class="button">Zapisz</button>
+            <button id="cancel-icon" class="button no">Anuluj</button>
+        </div>
+    </div>
+</div>
+<div id="modal-skills" class="modal">
+    <div class="modal-content">
+        <div class="icons-skills">
+            <div class="edit-skills">
+                <% if (isMine) { %>
+                    <img src="../img/edit.svg">
+                    <button id="edit">Edytuj</button>
+                <% } %>
+            </div>
+            <div id="close-skills" class="close">&times;</div>
+        </div>
+        <section id="skills-modal-display" class="skills skills-modal">
+            <% if (skillsList.length === 0) { %>
+                Brak umiejętności
+            <% }
+            for (skill of skillsList) { %>
+                <div class="skill-element">
+                    <div class="skill-name"><%= skill.name %></div>
+                    <div class="skill-indicator">
+                        <% for (let i = 0; i < parseInt(skill.skill_level); i++) { %>
+                            <span class="skill-point-full">•</span>
+                        <% } %>
+                        <% for (let i = 0; i < 10 - parseInt(skill.skill_level); i++) { %>
+                            <span class="skill-point-normal">•</span>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
+        </section>
+    </div>
+</div>
+<% if (isMine) { %>
+    <div id="modal-skills-edit" class="modal">
+        <div class="modal-content">
+            <div class="icons-skills">
+                <div class="edit-skills">
+                        <img src="../img/add.svg">
+                        <button id="new-skill">Dodaj nową umiejętność</button>
+                </div>
+                <div id="close-edit-skills" class="close">&times;</div>
+            </div>
+            <section id="skills-modal-edit" class="skills skills-modal">
+                <% for (skill of skillsList) { %>
+                    <div class="skill-element" id="skill-element-<%= skill.id %>">
+                        <div class="skill-name"><%= skill.name %></div>
+                        <div class="skill-indicator-edit">
+                        <% let index = 1;
+                            for (let i = 0; i < parseInt(skill.skill_level); i++) { %>
+                                <span id="<%= skill.id %>-<%= index %>" class="skill-point-full-edit">•</span>
+                            <% index++;
+                                } %>
+                            <% for (let i = 0; i < 10 - parseInt(skill.skill_level); i++) { %>
+                                <span id="<%= skill.id %>-<%= index %>" class="skill-point-normal-edit">•</span>
+                            <% index++;
+                                } %>
+                            <span id="<%= skill.id %>-delete" class="delete-skill">-</span>
+                        </div>
+                    </div>
+                <% } %>
+            </section>
+        </div>
+     </div>
+    <div id="modal-skills-new" class="modal profile-skills">
+        <div class="modal-content">
+            <span id="close-new" class="close">&times;</span>
+            <form id="search-skills-form" class="search-section" action="javascript:void(0);">
+                <input id="search-bar-skills" name="skillName" type="text" placeholder="Nazwa umiejętności"/>
+                <div id="search-result"></div>
+            </form>
+            <button id="search-button" type="submit" form="search-skills-form" class="button button-add">Dodaj</button>
+        </div>
+    </div>
+<% } %>
+    <% if (isMine) { %>
+        <%- include('./partials/navbar.ejs', { page: 'profile' }) %>
+    <% } else { %>
+        <%- include('./partials/navbar.ejs', { page: '' }) %>
+    <% } %>
+    <div class="filler"></div>
+    <main class="flex-row profile-flex">
+        <div class="profile-container">
+    <!--        <div class="filler"></div>-->
+            <img class="avatar" src="../img/icons/<%= profilePicture %>" />
+            <img id="avatar-overlay" class="avatar hidden" src="../img/change_profile.svg" />
+            <article class="main-container">
+
+                <h1> <% if (tasksStop.length !== 0) { %><span class="alert-icon">!</span> <% } %><%= username %> </h1>
+                <h4>Wymiar czasu pracy: <%= workTime %> h</h4>
+                <section class="skills">
+                    <% let len = skillsList.length > 4 ? 4 : skillsList.length;
+                        if (len === 0) { %>
+                        Brak umiejętności
+                       <% }
+                    for (let i = 0; i < len; i++) { %>
+                    <div class="skill-element">
+                        <div class="skill-name"><%= skillsList[i].name %></div>
+                        <div class="skill-indicator">
+                            <% for (let j = 0; j < parseInt(skillsList[i].skill_level); j++) { %>
+                                <span class="skill-point-full">•</span>
+                            <% } %>
+                            <% for (let j = 0; j < 10 - parseInt(skillsList[i].skill_level); j++) { %>
+                                <span class="skill-point-normal">•</span>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% } %>
+                </section>
+                <div class="more">
+                    <button id="more">Więcej...</button>
+                </div>
+            </article>
+        </div>
+        <div class="vr"></div>
+        <article class="main-container">
+            <% if (isMine) { %>
+                <div class="options-task delete-profile">
+                    <div class="edit-skills delete-task">
+                        <img src="../img/delete.svg">
+                        <button id="delete">Usuń profil</button>
+                    </div>
+                </div>
+            <% } %>
+            <h1 id="stats-header">Statystyki zadań</h1>
+            <section class="stats">
+                <div class="stats-element">
+                    <img src="../img/todo.svg" />
+                    Oczekujących
+                    <span><%= todoCounter %></span>
+                </div>
+                <div class="stats-element">
+                    <img src="../img/inprogress.svg" />
+                    W trakcie
+                    <span><%= inprogressCounter %></span>
+                </div>
+                <div class="stats-element">
+                    <img src="../img/done.svg" />
+                    Zakończonych
+                    <span><%= doneCounter %></span>
+                </div>
+            </section>
+        </article>
+    </main>
+<script>
+    let isMineJs = <%= isMine %>;
+</script>
+<script src="../js/profile.js"></script>
+</body>
+</html>

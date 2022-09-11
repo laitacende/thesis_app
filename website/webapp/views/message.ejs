@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("./partials/head.ejs")%>
+</head>
+<body>
+<%- include('./partials/navbar.ejs', {page: 'home'}) %>
+<div class="filler"></div>
+<main class="center">
+    <article class="main-container">
+        <%= msg %>
+        <a class="link-back" href="<%= link %>"><%= linkMsg %></a>
+    </article>
+</main>
+<script src="../js/main_panel.js"></script>
+</body>
+</html>
