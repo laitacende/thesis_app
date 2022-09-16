@@ -2,6 +2,7 @@ const Queue = require("./structures/Queue");
 const Stack = require("./structures/Stack");
 const CircularList = require("./structures/CircularList");
 const PriorityQueue = require("./structures/PriorityQueue");
+const PriorityQueueDecreaseKey = require("./structures/PriorityQueueDecreaseKey");
 
 function bfsResidual(graph, source, target) {
     graph.nodes.forEach(node => {
@@ -544,7 +545,7 @@ function dijkstraResidual(graph, source, target) {
     graph.nodes[source].dist = 0;
     graph.nodes[source].prev = source;
 
-    let q = new PriorityQueue(graph.vNo);
+    let q = new PriorityQueueDecreaseKey(graph.vNo);
     graph.nodes.forEach(node => {
         q.insert(node.key, node.dist);
     });

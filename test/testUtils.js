@@ -32,6 +32,7 @@ const utilsTests = require("../algorithms_tests/utils");
 //     });
 //
 // });
+
 /*
 describe('Graph 1', () => {
     let g = new Graph(5, true);
@@ -45,6 +46,15 @@ describe('Graph 1', () => {
     g.addEdge(3, 4, 1, 2);
     g.addEdge(4, 3, 1, 7);
     g.addEdge(4, 0, 0, 3);
+
+    it('Dijkstra', () => {
+        assert.equal(utils.dijkstraResidual(g, 0, 4), true);
+        assert.equal(g.nodes[0].dist, 0);
+        assert.equal(g.nodes[1].dist, 3);
+        assert.equal(g.nodes[2].dist, 5);
+        assert.equal(g.nodes[3].dist, 9);
+        assert.equal(g.nodes[4].dist, 11);
+    });
 
 
     it('Dial', () => {

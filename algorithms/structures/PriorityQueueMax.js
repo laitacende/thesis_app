@@ -1,6 +1,6 @@
 const QueueNode = require("./QueueNode");
 
-class PriorityQueue {
+class PriorityQueueMax {
     heap = [];
     maxSize;
     heapSize;
@@ -9,7 +9,7 @@ class PriorityQueue {
         this.maxSize = size;
         this.heapSize = 0;
         for (let i = 1; i <= this.maxSize; i++) {
-            this.heap.push(new QueueNode(0, Number.MAX_VALUE));
+            this.heap.push(new QueueNode(0, 0));
         }
     }
 
@@ -27,7 +27,7 @@ class PriorityQueue {
         }
         this.heapSize++;
         let i = this.heapSize;
-        while (i > 1 && this.heap[this.parent(i)].priority > priority) {
+        while (i > 1 && this.heap[this.parent(i)].priority < priority) {
             this.heap[i] = this.heap[this.parent(i)];
             i = this.parent(i);
         }
@@ -36,42 +36,46 @@ class PriorityQueue {
     }
 
     changePriority(key, newPriority) {
-        for (let i = 1; i < this.heapSize; i++) {
-            if (this.heap[i].key === key && newPriority < this.heap[i].priority) {
+        for (let i = 1; i <= this.heapSize; i++) {
+            if (this.heap[i].key === key && this.heap[i].priority < newPriority) {
                 this.heap[i].priority = newPriority;
-                while (i > 1 && this.heap[this.parent(i)].priority > this.heap[i].priority) {
+                while (i > 1 && this.heap[this.parent(i)].priority < this.heap[i].priority) {
                     this.swap(i, this.parent(i));
                     i = this.parent(i);
                 }
+                break;
+            } else if (this.heap[i].key === key && this.heap[i].priority !== newPriority) {
+                this.heap[i].priority = newPriority;
+                this.heapify(i);
+                break;
             }
         }
     }
 
-    extractMin() {
+    extractMax() {
         if (this.heapSize <= 0) {
             return new QueueNode(0, 0);
         }
-
-        let min = this.heap[1];
+        let max = this.heap[1];
         this.heap[1] = this.heap[this.heapSize];
         this.heapSize--;
         this.heapify(1);
-        return min;
+        return max;
     }
 
     heapify(i) {
-        let smallest = i;
-        if (this.left(i) <= this.heapSize && this.heap[smallest].priority > this.heap[this.left(i)].priority) {
-            smallest = this.left(i);
+        let largest = i;
+        if (this.left(i) <= this.heapSize && this.heap[largest].priority < this.heap[this.left(i)].priority) {
+            largest = this.left(i);
         }
 
-        if (this.right(i) <= this.heapSize && this.heap[smallest].priority > this.heap[this.right(i)].priority) {
-            smallest = this.right(i);
+        if (this.right(i) <= this.heapSize && this.heap[largest].priority < this.heap[this.right(i)].priority) {
+            largest = this.right(i);
         }
 
-        if (i !== smallest) {
-            this.swap(i, smallest);
-            this.heapify(smallest);
+        if (i !== largest) {
+            this.swap(i, largest);
+            this.heapify(largest);
         }
     }
 
@@ -95,4 +99,4 @@ class PriorityQueue {
 }
 
 
-module.exports = PriorityQueue;
+module.exports = PriorityQueueMax;

@@ -1,9 +1,11 @@
 const QueueNode = require("./QueueNode");
 
-class PriorityQueue {
+class PriorityQueueDecreaseKey {
     heap = [];
     maxSize;
     heapSize;
+    indexes;
+
 
     constructor(size) {
         this.maxSize = size;
@@ -11,6 +13,7 @@ class PriorityQueue {
         for (let i = 1; i <= this.maxSize; i++) {
             this.heap.push(new QueueNode(0, Number.MAX_VALUE));
         }
+        this.indexes = new Map(); // map between keys in graph and position in heap array
     }
 
     top() {
@@ -33,16 +36,16 @@ class PriorityQueue {
         }
 
         this.heap[i] = new QueueNode(key, priority);
+        this.indexes.set(key, i);
     }
 
     changePriority(key, newPriority) {
-        for (let i = 1; i < this.heapSize; i++) {
-            if (this.heap[i].key === key && newPriority < this.heap[i].priority) {
-                this.heap[i].priority = newPriority;
-                while (i > 1 && this.heap[this.parent(i)].priority > this.heap[i].priority) {
-                    this.swap(i, this.parent(i));
-                    i = this.parent(i);
-                }
+        let heapIndex = this.indexes.get(key);
+        if (newPriority < this.heap[heapIndex].priority) {
+            this.heap[heapIndex].priority = newPriority;
+            while (heapIndex > 1 && this.heap[this.parent(heapIndex)].priority > this.heap[heapIndex].priority) {
+                this.swap(heapIndex, this.parent(heapIndex));
+                heapIndex = this.parent(heapIndex);
             }
         }
     }
@@ -56,6 +59,7 @@ class PriorityQueue {
         this.heap[1] = this.heap[this.heapSize];
         this.heapSize--;
         this.heapify(1);
+        this.indexes.delete(min);
         return min;
     }
 
@@ -89,10 +93,13 @@ class PriorityQueue {
 
     swap(i, j) {
         let tmp = this.heap[i];
+        let tmpPos = this.indexes.get(i);
         this.heap[i] = this.heap[j];
         this.heap[j] = tmp;
+        this.indexes.set(i, this.indexes.get(j));
+        this.indexes.set(j, tmpPos);
     }
 }
 
 
-module.exports = PriorityQueue;
+module.exports = PriorityQueueDecreaseKey;
