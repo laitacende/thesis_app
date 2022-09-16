@@ -45,6 +45,10 @@ function createGraphFromFileMatching(filePath, isDirected) {
     return graph;
 }
 
+/**
+ * Function dumps graph to data file which can be used to solve with glpk solver (min cost flow).
+ * @param fileName name of the file
+ */
 function dumpGraphToFileMinCostFlow(fileName, graph) {
     let content = "set N := ";
     for (let i = 0; i < graph.vNo; i++) {

@@ -1,8 +1,14 @@
 const utils = require("../utils");
-const algorithms_functions = require("../algorithms_functions");
 
-// based on https://www.topcoder.com/thrive/articles/Minimum%20Cost%20Flow%20Part%20Two:%20Algorithms
-// directed graph
+/**
+ * Solves maximum bipartite weighted matching.
+ * Cycle cancelling algorithm implementation based on https://www.topcoder.com/thrive/articles/Minimum%20Cost%20Flow%20Part%20Two:%20Algorithms
+ * Base assigment is i to i + n/2.
+ * Algorithm sets balances of nodes - first set to 1, second set to -1.
+ *
+ * @param graph bipartite directed graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
+ * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
+ */
 function cycleCancellingAlgorithm(graph) {
     // set balances, first half suppliers, the other one customers
     let half = graph.vNo / 2 - 1;
@@ -20,25 +26,15 @@ function cycleCancellingAlgorithm(graph) {
     // construct a graph for max flow algorithm
     // add new source and connect with 'suppliers'
     // add new target and connect with 'clients'
-    // use max flow algorithm to find feasible flow
+    // use max flow algorithm to find feasible flow - not needed here, it is sufficient to get any matching
 
     let graphFeasible = graphNegative.getCopyForMaxFlow();
     if (graphFeasible == null) {
         console.log("There is no feasible solution");
-        return -1;
+        return null;
     }
-    // not necessarily needed here
-    // algorithms_functions.dinics(graphFeasible, graphFeasible.vNo - 2, graphFeasible.vNo - 1);
-    // // check if the found flow saturates the edges from source and to target
-    // graphFeasible.nodes[graphFeasible.vNo - 1].adjacencyList.forEach(neighbour => {
-    //     if (neighbour.flow !== neighbour.capacity) {
-    //         console.log("There is no feasible solution");
-    //         return -1;
-    //     }
-    // });
 
-    // can be done like this (just get some matching - connect node i with node i + n/2
-    // and saturate edges from source and to target
+    // get some matching - connect node i with node i + n/2 and saturate edges from source and to target
     for (let i = 0; i <= half; i++) {
         graphFeasible.nodes[i].adjacencyList.get(i + half + 1).flow = 1;
     }
@@ -57,9 +53,9 @@ function cycleCancellingAlgorithm(graph) {
 
     let key = null;
     let negativeCycle = true;
-    // now detect negative cycles in residual graph
+    // detect negative cycles in residual graph
     graphFeasible.constructResidual();
-    updateResidual(graphFeasible); // set residual capacities according to found flow
+    updateResidualBasedOnFlow(graphFeasible); // set residual capacities according to found flow
     while (negativeCycle) {
         key = utils.fifoLabelCorrectingResidualNegativeCycle(graphFeasible, graphFeasible.vNo - 1);
         if (key === null) {
@@ -69,7 +65,6 @@ function cycleCancellingAlgorithm(graph) {
             let min = null;
             min = 1;
             utils.updateResidualCapacitiesCycle(graphFeasible, min, key);
-            // overall flow is max (started from maximum flow)
         }
     }
     // get assigment
@@ -84,7 +79,12 @@ function cycleCancellingAlgorithm(graph) {
     return M;
 }
 
-function updateResidual(graph) {
+/**
+ * Function that sets residual capacities according to some flow going from the first set to the
+ * second set of vertices.
+ * @param graph bipartite directed graph, first set indices 0..(n - 1), second set n..(2n - 1)
+ */
+function updateResidualBasedOnFlow(graph) {
     graph.nodes.forEach(node => {
        node.adjacencyList.forEach(neighbour => {
            if (neighbour.flow > 0) {

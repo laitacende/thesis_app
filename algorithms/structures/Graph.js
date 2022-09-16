@@ -1,11 +1,29 @@
 const Node = require("./Node");
-const fs = require('fs');
 
+/**
+ * Class that represents a graph using adjacency list.
+ */
 class Graph {
+    /**
+     * Array of objects of class {@link Node}.
+     */
     nodes;
+
+    /**
+     * Number of vertices.
+     */
     vNo; // number of vertices
+
+    /**
+     * Variable to indicate if graph is directed (true) or undirected (false).
+     */
     isDirected;
 
+    /**
+     * Main constructor. Initializes array of nodes and sets attributes.
+     * @param vNo number of vertices
+     * @param isDirected true if graph is directed, false otherwise
+     */
     constructor(vNo, isDirected) {
         this.nodes = new Array(vNo);
         this.vNo = vNo;
@@ -17,10 +35,11 @@ class Graph {
     }
 
     /**
-     * Function adds directed edge between source and destination
+     * Function adds edge between source and destination based on isDirected value
      * @param source start node
      * @param destination end node
      * @param capacity capacity of the edge
+     * @param cost cost (weight) of the edge
      */
     addEdge(source, destination, capacity, cost) {
         this.nodes[source].addNeighbour(destination, capacity, cost);
@@ -29,6 +48,13 @@ class Graph {
         }
     }
 
+    /**
+     * Function which adds weight to given edge. Source and destination can be
+     * interchanged when graph is undirected.
+     * @param source start node
+     * @param destination end node
+     * @param added amount to be added to weight
+     */
     addWeightToEdge(source, destination, added) {
         this.nodes[source].addWeight(destination, added);
         if (!this.isDirected) {
@@ -36,10 +62,18 @@ class Graph {
         }
     }
 
+    /**
+     * Function which sets balance of given node.
+     * @param key identifier of node which balance is to be set
+     * @param balance value of balance to be set
+     */
     setBalance(key, balance) {
         this.nodes[key].setBalance(balance);
     }
 
+    /**
+     * Function that constructs residual network of graph. Assumes that current flow is 0.
+     */
     constructResidual() {
         this.nodes.forEach(node => {
              node.adjacencyListResidual = new Map();
@@ -56,6 +90,14 @@ class Graph {
         });
     }
 
+    /**
+     * Function which creates an instance of this graph for max flow algorithms.
+     * Adds source with identifier vNo and target with identifier vNo + 1.
+     * Source is connected with all nodes with positive balances and
+     * target is connected with all nodes with negative balances.
+     *
+     * @returns {Graph|null} new instance for max flow, null if balances aren't adding up to 0
+     */
     getCopyForMaxFlow() {
         let copy = new Graph(this.vNo + 2, this.isDirected);
         let pos = 0;
@@ -82,6 +124,10 @@ class Graph {
         return copy;
     }
 
+    /**
+     * Function that creates an instance of this graph but with negated costs (weight of edges).
+     * @returns {Graph} graph with negated costs
+     */
     getCopyWithOppositeCosts() {
         let copy = new Graph(this.vNo, this.isDirected);
 
@@ -94,28 +140,12 @@ class Graph {
         return copy;
     }
 
-    getCopyWithPositiveCosts() {
-        // find minimum cost (costs are 0 or negative)
-        let min = 0;
-        this.nodes.forEach(node => {
-           node.adjacencyList.forEach(neighbour => {
-               if (neighbour.cost < min) {
-                   min = neighbour.cost;
-               }
-           });
-        });
-        min = -min;
-        let copy = new Graph(this.vNo, this.isDirected);
-
-        this.nodes.forEach(node => {
-            copy.nodes[node.key].setBalance(node.balance);
-            node.adjacencyList.forEach(neighbour => {
-                copy.addEdge(node.key, neighbour.key, neighbour.capacity, min + neighbour.cost);
-            });
-        });
-        return copy;
-    }
-
+    /**
+     * Function which creates an equality graph (containing only edges for which
+     * label(i) + label(j) == cost(i, j) - tight edges).
+     *
+     * @returns {Graph} equality graph based ont this graph current state
+     */
     getEqualityGraph() {
         let copy = new Graph(this.vNo, false);
 
@@ -130,6 +160,9 @@ class Graph {
         return copy;
     }
 
+    /**
+     * Function which prints flow in form 'i j flow' to stdout.
+     */
     printFlow() {
         console.log("i  j  flow");
         this.nodes.forEach(node => {
@@ -139,6 +172,10 @@ class Graph {
         });
     }
 
+
+    /**
+     * Function which prints graph in form 'i j capacity cost' to stdout.
+     */
     printGraph() {
         console.log("key i   key j  capacity  cost")
         this.nodes.forEach(node => {
@@ -148,6 +185,9 @@ class Graph {
         });
     }
 
+    /**
+     * Function which prints residual graph in form 'i j capacity cost' to stdout.
+     */
     printGraphResidual() {
         console.log("key i   key j  capacity  cost")
         this.nodes.forEach(node => {
@@ -157,68 +197,23 @@ class Graph {
         });
     }
 
+    /**
+     * Function which prints labels in form 'key label saturated' to stdout.
+     */
     printLabels() {
         this.nodes.forEach(node => {
             console.log(node.key + " " + node.label + " " + node.saturated);
         });
     }
 
+    /**
+     * Function which prints node distances in form 'key distance' to stdout.
+     */
     printDistances() {
         this.nodes.forEach(node => {
            console.log(node.key + " " + node.dist);
         });
     }
-
-    /**
-     * Function dumps graph to data file which can be used to solve with glpk solver (min cost flow)
-     * @param fileName name of the file
-     */
-    dumpToFile(fileName) {
-        let content = "set N := ";
-        for (let i = 0; i < this.vNo; i++) {
-            content += i + " ";
-        }
-        content += ";\n\n";
-
-        content += "set A :=\n"
-        this.nodes.forEach(node => {
-            node.adjacencyList.forEach(neighbour => {
-                content += node.key + " " + neighbour.key + "\n";
-            });
-        });
-        content += ";\n\n";
-
-        content += "param: capacity := \n";
-        this.nodes.forEach(node => {
-            node.adjacencyList.forEach(neighbour => {
-                content += node.key + " " + neighbour.key + " " + neighbour.capacity + "\n";
-            });
-        });
-        content += ";\n\n";
-
-        content += "param: cost := \n";
-        this.nodes.forEach(node => {
-            node.adjacencyList.forEach(neighbour => {
-                content += node.key + " " + neighbour.key + " " + neighbour.cost + "\n";
-            });
-        });
-        content += ";\n\n";
-
-        content += "param: balance := \n";
-        this.nodes.forEach(node => {
-            content += node.key + " " + node.balance + "\n";
-        });
-        content += ";\n\n";
-
-        content += "end;"
-
-        fs.writeFile(fileName + ".dat", content, err => {
-            if (err) {
-                console.log("Could not dump graph to file.")
-            }
-        });
-    }
-
 }
 
 module.exports = Graph;

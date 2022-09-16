@@ -1,13 +1,14 @@
 const utils = require("../utils");
-const {reduceCosts} = require("../utils");
 
 /**
- * Solves maximum bipartite weighted matching
+ * Solves maximum bipartite weighted matching.
  * Relaxation algorithm, based on "Network Flows. Theory, Algorithms and Applications",
- * Ahuja, Magnant, Orlin, section 12.4, p.472
- * Choosing not matched and overassigned nodes is based on sets
+ * Ahuja, Magnant, Orlin, section 12.4, p.472.
+ * Choosing not matched and overassigned nodes is based on sets.
+ * Calculating the shortest path using FIFO label correcting algorithm.
+ *
  * Time complexity of sets: time complexity https://stackoverflow.com/questions/31091772/javascript-es6-computational-time-complexity-of-collections
- * @param graph directed graph (edges from the first set to the second one, if bipartite), nodes with balances
+ * @param graph bipartite directed graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
  * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
  */
 function relaxationAlgorithm(graph) {
@@ -52,34 +53,18 @@ function relaxationAlgorithm(graph) {
         }
     }
 
-    // console.log("-----------------------")
-    // graphNegative.printGraphResidual();
-    // console.log("-----------------------");
-    //graphNegative.printFlow();
 
     let iteratorOverassigned;
     let overassignedKey;
     while (true) {
         // choose overassigned node from the second set
-        //console.log(graphNegative.nodes)
         iteratorOverassigned = overassigned.values();
         overassignedKey = iteratorOverassigned.next().value; // get first key form set
-       // graphNegative.printFlow();
         if (overassignedKey) {
-            //console.log(overassignedKey, " ", graphNegative.nodes[overassignedKey].assignmentNumber);
-            // obtain shortest path distances from this node to all other nodes in residual network
-            // console.log("--------------s")
-            // graphNegative.printGraphResidual();
-            // console.log("--------------e")
             utils.fifoLabelCorrectingResidual(graphNegative, overassignedKey, null);
-            // console.log("--------------s1")
-            // graphNegative.printDistances();
-            // console.log("--------------e1")
-
             // choose node with no assigment and follow the shortest path along it
-            for (let node of notMatched) { // maybe here get the shortest path...
+            for (let node of notMatched) {
                if (graphNegative.nodes[node].dist !== null) { // reachable from overassigned node
-                   //console.log("chosen ", node)
                    // augment flow along the path
                    utils.updateResidualCapacities(graphNegative, 1, node);
                    notMatched.delete(node);
@@ -90,26 +75,11 @@ function relaxationAlgorithm(graph) {
                    break;
                }
             }
-            // let min = null;
-            // let chosen = 0;
-            // for (let node of notMatched) { // maybe here get the shortest path...
-            //     if (graphNegative.nodes[node].dist !== null && (min === null || min > graphNegative.nodes[node].dist)) { // reachable from overassigned node
-            //         min = graphNegative.nodes[node].dist;
-            //         chosen = node;
-            //     }
-            // }
-            // console.log(chosen)
-            // utils.updateResidualCapacities(graphNegative, 1, chosen);
-            // notMatched.delete(chosen);
-            // graphNegative.nodes[overassignedKey].assignmentNumber--;
-            // if (graphNegative.nodes[overassignedKey].assignmentNumber === 1) {
-            //     overassigned.delete(overassignedKey);
-            // }
+
         } else {
             // get matching and return
             for (let i = 0; i < graphNegative.vNo; i++) {
                 graphNegative.nodes[i].adjacencyList.forEach(neighbour => {
-                   // console.log("i ", i, " neighbour ", neighbour, " flow ", neighbour.flow)
                     if (neighbour.flow > 0) {
                         M.add({source: i, destination: neighbour.key});
                     }
@@ -120,6 +90,7 @@ function relaxationAlgorithm(graph) {
     }
 }
 
+// doesn't work
 function relaxationAlgorithmReducedCosts(graph) {
     let M = new Set();
     let overassigned = new Set();

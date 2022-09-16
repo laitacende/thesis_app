@@ -1,11 +1,11 @@
 const utils = require("../utils");
 
 /**
- * Solves max-flow-min-cost problem
+ * Solves max-flow-min-cost problem.
  * Algorithm based on description in "Network Flows. Theory, Algorithms and Applications",
- * Ahuja, Magnant, Orlin, section 12.4, p.471
+ * Ahuja, Magnant, Orlin, section 12.4, p.471.
  * Uses FIFO label correcting algorithm to find the shortest paths.
- * @param graph directed graph (edges from the first set to the second one, if bipartite), nodes with balances
+ * @param graph bipartite directed graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
  * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
  */
 // todo zamiast fifo moze byc deque
@@ -33,7 +33,7 @@ function successiveShortestPathAlgorithm(graph) {
     // look for the shortest path in the residual graph in terms of weight of edges
     while (utils.fifoLabelCorrectingResidual(flowGraph, source, target)) {
         // augment flow along the found path
-        // find min TODO is it needed? max capacity is 1... - assigment
+        // no need to find min, as it is 1 in assigment
         let min = null;
         min = 1;
         /*let curr = target;

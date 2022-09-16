@@ -3,7 +3,8 @@ const utils = require("../utils");
 /**
  * Bipartite weighted maximum matching, required the same number of vertices in both sets
  * O(n^3) version based on http://www.columbia.edu/~cs2035/courses/ieor6614.S16/GolinAssignmentNotes.pdf
- * @param graph bipartite graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
+ *
+ * @param graph bipartite undirected graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
  * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
  */
 function hungarianAlgorithm(graph) {
@@ -120,8 +121,8 @@ function hungarianAlgorithm(graph) {
 }
 
 /**
- * Function that generates initial feasible labeling
- * For x in X label is the greatest edge weight, for y in Y it is 0
+ * Function that generates initial feasible labeling.
+ * For x in X label is the greatest edge weight, for y in Y it is 0.
  * @param graph V = X u Y
  */
 function getFeasibleLabeling(graph) {
@@ -151,9 +152,9 @@ function getFeasibleLabeling(graph) {
 }
 
 /**
- * Function that checks if given matching is perfect for this graph
+ * Function that checks if given matching is perfect for this graph.
  * @param graph
- * @param M matching
+ * @param M matching in form {source: key, destination: key}
  * @returns {boolean} true if matching is perfect, false otherwise
  */
 function isPerfectMatching(graph, M) {
@@ -171,7 +172,7 @@ function isPerfectMatching(graph, M) {
 }
 
 /**
- * Function that returns a set of neighbours for set of nodes
+ * Function that returns a set of neighbours for given set of nodes.
  * @param graph
  * @param S set of nodes
  * @returns {Set<any>} set of neighbours of nodes in S
@@ -187,7 +188,7 @@ function getNeighboursOfSet(graph, S) {
 }
 
 /**
- * Function checks if two sets are equal
+ * Function that checks if two sets are equal.
  * @param a first set
  * @param b second set
  * @returns {boolean} true if sets are equal, false otherwise
@@ -205,9 +206,9 @@ function isEqual(a, b) {
 }
 
 /**
- * Function that gives initial matching
+ * Function that sets initial matching.
  * @param equalityGraph equality graph (only edges satisfying label(x) + label(y) == cost(x, y))
- * @param graph
+ * @param graph original graph
  * @returns {Set<any>} matching - set of edges in the form {source:key, destination: key}
  */
 function getMatching(equalityGraph, graph) {
@@ -235,7 +236,7 @@ function getMatching(equalityGraph, graph) {
 }
 
 /**
- * Function returns the other end of edge which covers node y
+ * Function returns the other end of edge which covers node y.
  * @param M matching
  * @param y node
  * @returns node which is the other end of the edge in matching, null if there is no edge with y on either end
@@ -254,10 +255,10 @@ function checkWhereMatched(M, y) {
 }
 
 /**
- * Function checks whether edge is in given matching
+ * Function checks whether edge is in given matching.
  * @param M matching
- * @param x source
- * @param y destination
+ * @param x source of the edge
+ * @param y destination of the edge
  * @returns pair {source: x, destination: y} if it is in matching, null otherwise
  */
 function isInMatching(M, x, y) {

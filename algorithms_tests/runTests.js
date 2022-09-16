@@ -16,7 +16,7 @@ for (let i = 0; i < size; i++) {
     costs[i] = 0; // costs is only for one graph at time - control if result is correct
     time[i] = 0;
 }
-// i <= 200, j < 10
+
 for (let i = 10; i <= 200; i = i + 10) {
    // get graph from file
     for (let j = 0; j < 10; j++) {

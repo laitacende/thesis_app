@@ -1,9 +1,15 @@
 const Queue = require("../structures/Queue");
 const PriorityQueueDecreaseKeyMax = require("../structures/PriorityQueueDecreaseKeyMax");
-const PriorityQueueDecreaseKey = require("../structures/PriorityQueueDecreaseKey");
-const PriorityQueue = require("../structures/PriorityQueue");
 const PriorityQueueMax = require("../structures/PriorityQueueMax");
 
+/**
+ * Solves maximum bipartite weighted matching.
+ * Auction algorithm implementation based on https://agtb.wordpress.com/2009/07/13/auction-algorithm-for-bipartite-matching/.
+ * Maximum c_{ij} - p_j is obtained by O(n/2) algorithm.
+ *
+ * @param graph bipartite graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
+ * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
+ */
 // based on https://agtb.wordpress.com/2009/07/13/auction-algorithm-for-bipartite-matching/
 // and https://resources.mpi-inf.mpg.de/departments/d1/teaching/ws09_10/Opt2/handouts/lecture1.pdf
 function auctionAlgorithm(graph) {
@@ -54,6 +60,13 @@ function auctionAlgorithm(graph) {
     return M;
 }
 
+/**
+ * Auction algorithm implementation based on https://agtb.wordpress.com/2009/07/13/auction-algorithm-for-bipartite-matching/.
+ * Each bidder has a priority queue, where priority is c_{ij} - p_j - used to obtain maximum in O(1).
+ *
+ * @param graph bipartite directed graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
+ * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
+ */
 function auctionAlgorithmPriorityQueue(graph) {
     // owners are the nodes from the first set and goods are the nodes from the second set
     let half = graph.vNo / 2 - 1;
@@ -109,6 +122,14 @@ function auctionAlgorithmPriorityQueue(graph) {
     return M;
 }
 
+/**
+ * Auction algorithm implementation based on https://agtb.wordpress.com/2009/07/13/auction-algorithm-for-bipartite-matching/.
+ * Each bidder has a priority queue, where priority is c_{ij} - p_j - used to obtain maximum in O(1).
+ * Priority queue with map to speed up changing priority operation.
+ *
+ * @param graph bipartite directed graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
+ * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
+ */
 function auctionAlgorithmPriorityQueueDecreaseKey(graph) {
     // owners are the nodes from the first set and goods are the nodes from the second set
     let half = graph.vNo / 2 - 1;
