@@ -14,6 +14,9 @@ let skillsList = document.querySelector('.skills-list');
 dragula([document.querySelector('.drag-list-simulation'),
     document.querySelector('.people-in-project-list')]);
 
+/**
+ * Add listeners to items on the list to highlight on hover.
+ */
 let updateListeners = () => {
     list = document.getElementsByClassName('list-item');
     for (let element of list) {
@@ -27,6 +30,12 @@ let updateListeners = () => {
     }
 };
 
+/**
+ * Function that fetches list of people without people already used in container
+ * and displays list in HTML.
+ *
+ * @param name if null, then gets all people, if not, then gets people with name based on input
+ */
 let fetchListPeople = (name) => {
     // get people already used (ids)
     let peopleUsed = peopleContent.children;
@@ -74,6 +83,9 @@ let fetchListPeople = (name) => {
     });
 };
 
+/**
+ * Fetch list of people's names based on user's input.
+ */
 let fetchListPeopleSearch = () => {
     // get people already used (ids)
     let peopleUsed = peopleContent.children;
@@ -213,6 +225,9 @@ document.querySelector('.back-icon').addEventListener('click', () => {
 let peopleContainer = document.querySelector('.people-in-project-list');
 let peopleAssets = document.querySelector('.drag-list-simulation');
 
+/**
+ * Function that adds listeners to list items to add and delete them from container on click.
+ */
 // add to containers on click
 let updateListenersPeople = () => {
     let listPeople = document.getElementsByClassName('list-item');

@@ -15,11 +15,11 @@ let skillsContentEdit = document.getElementById('skills-modal-edit');
 let save = document.getElementById('search-button');
 let no = document.getElementById('cancel');
 let errorField = document.getElementById('error-message');
-// let modalError = document.getElementById('modal-error');
-// let closeButtonError = document.getElementById('close-button');
-// let closeError = document.getElementById('close-x');
-// let errorMessage = document.getElementById('message-error');
 
+
+/**
+ * Fetch list of people's names based on user's input.
+ */
 let fetchSearchPeople = () => {
     fetch('/people-search?username=' + inputAssignee.value.replace(" ", "_")).then((res) => {
         let htmlList = '<ul class="search-result-list">';
@@ -51,6 +51,9 @@ let fetchSearchPeople = () => {
     });
 };
 
+/**
+ * Fetch list of skills' names based on user's input.
+ */
 let fetchSearchSkills = () => {
     fetch('/skills-search?search=' + encodeURIComponent(searchBar.value)).then((res) => {
         let htmlList = '<ul class="search-result-list">';
@@ -82,6 +85,9 @@ let fetchSearchSkills = () => {
     });
 };
 
+/**
+ * Function that adds listeners to delete icons to remove skill element from HTML.
+ */
 let updateListeners = () => {
     for (let element of deleteList) {
         element.addEventListener('click', (event) => {
@@ -102,18 +108,7 @@ if (getCookie('error') === "true") {
 }
 
 
-// closeButtonError.addEventListener('click', () => {
-//     modalError.style.display = "none";
-// });
-//
-// closeError.addEventListener('click', () => {
-//     modalError.style.display = "none";
-// });
-
 window.onclick = (event) => {
-    // if (event.target === modalError) {
-    //     modalError.style.display = "none";
-    // }
 
     if (event.target !== searchResultAssignee) {
         searchResultAssignee.innerHTML = "";

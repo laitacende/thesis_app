@@ -1,3 +1,10 @@
+/**
+ * Function to set cookie.
+ *
+ * @param cname cookie name (key)
+ * @param cvalue cookie value
+ * @param exdays expiration time in days
+ */
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -5,6 +12,12 @@ function setCookie(cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";";
 }
 
+/**
+ * Function to get cookie by name.
+ *
+ * @param cname cookie name
+ * @returns {string} cookie value
+ */
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -21,10 +34,18 @@ function getCookie(cname) {
     return "";
 }
 
+/**
+ * Function to delete cookie of given name.
+ *
+ * @param cname cookie name
+ */
 function deleteCookie(cname) {
     document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
 }
 
+/**
+ * Function to delete all cookies.
+ */
 function deleteAllCookies() {
     let cookies = document.cookie.split(";");
 

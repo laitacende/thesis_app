@@ -43,10 +43,3 @@ app.use(require('./utils/routesPost'));
 let bodyParser = require('body-parser');
 app.use(bodyParser.json({ limit: '50mb'}))
 app.use(bodyParser.urlencoded({ extended: false }));
-
-const Graph = require("./algorithms/structures/Graph");
-const algorithms_functions = require("./algorithms/algorithms_functions");
-const hungarian_algorithm = require("./algorithms/algorithms_implementations/hungarianAlgorithm");
-const successive = require("./algorithms/algorithms_implementations/successiveShortestPathAlgorithm");
-const cycle = require("./algorithms/algorithms_implementations/cycleCancellingAlgorithm");
-const utils = require("./algorithms/utils");

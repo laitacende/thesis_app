@@ -13,11 +13,22 @@ let modalInfo = document.getElementById('modal-info');
 let closeInfo = document.getElementById('close-info');
 let closeButtonInfo = document.getElementById('close-button-info');
 let infoMessage = document.getElementById('info-message');
-// let modalError = document.getElementById('modal-error');
-// let closeButtonError = document.getElementById('close-button');
-// let closeError = document.getElementById('close-x');
-// let errorMessage = document.getElementById('message-error');
 
+let list = document.getElementsByClassName('list-item');
+
+for (let element of list) {
+   element.addEventListener('mouseover', (event) => {
+      element.classList.add('border-hover');
+   });
+
+   element.addEventListener('mouseout', (event) => {
+      element.classList.remove('border-hover');
+   });
+}
+
+/**
+ * Fetch list of people's names based on user's input.
+ */
 let fetchSearch = () => {
    fetch('/people-search?username=' + searchBar.value.replace(" ", "_")).then((res) => {
       let htmlList = '<ul class="search-result-list">';
@@ -67,10 +78,6 @@ window.onclick = function(event) {
    if (event.target !== document.querySelector('#search-result')) {
       searchResult.innerHTML = "";
    }
-
-   // if (event.target === modalError) {
-   //    modalError.style.display = "none";
-   // }
 }
 
 if (fob) {
@@ -138,9 +145,5 @@ if (fob) {
       if (event.target === modalInfo) {
          modalInfo.style.display = "none";
       }
-
-      // if (event.target === modalError) {
-      //     modalError.style.display = "none";
-      // }
    });
 }

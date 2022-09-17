@@ -5,6 +5,9 @@ let closeButtonError = document.getElementById('close-button');
 let closeError = document.getElementById('close-x');
 let errorMessage = document.getElementById('message-error');
 
+/**
+ * Function that deleted all cookies.
+ */
 deleteAllCookies = () => {
     let cookies = document.cookie.split(";");
 

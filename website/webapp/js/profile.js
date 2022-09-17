@@ -18,6 +18,9 @@ let modalInfo = document.getElementById('modal-info');
 let buttonInfo = document.getElementById('close-info');
 let closeInfo = document.getElementById('close-x-info');
 
+/**
+ * Function to fetch skills of user and display them in HTML.
+ */
 let fetchSkillsList = () => {
     // update skills list in skills modal
     fetch('/skills-list').then((res) => {
@@ -54,6 +57,9 @@ let fetchSkillsList = () => {
     });
 };
 
+/**
+ * Function that add listeners to skills elements to update skill level.
+ */
 let updateListeners = () => {
     for (let element of skillsEditList) {
         element.addEventListener('click', (event) => {
@@ -148,6 +154,9 @@ buttonInfo.addEventListener('click', () => {
 
 if (isMineJs) {
 
+    /**
+     * Fetch list of skills' names based on user's input.
+     */
     let fetchSearchSkills = () => {
         fetch('/skills-search?search=' + encodeURIComponent(searchBar.value)).then((res) => {
             let htmlList = '<ul class="search-result-list">';
@@ -178,7 +187,9 @@ if (isMineJs) {
             modalError.style.display = "flex";
         });
     };
+
     overlay.style.cursor = "pointer";
+
     overlay.addEventListener('click', (event) => {
         // display modal with different pictures and buttons to save and cancel
         modalIcons.style.display = "flex";
@@ -381,14 +392,6 @@ document.getElementById('close-skills').addEventListener('click', () => {
     modalSkills.style.display = "none";
 });
 
-// closeButtonError.addEventListener('click', () => {
-//    modalError.style.display = "none";
-// });
-//
-// closeError.addEventListener('click', () => {
-//     modalError.style.display = "none";
-// });
-
 window.onclick = function(event) {
     if (event.target === modalSkills) {
         modalSkills.style.display = "none";
@@ -397,10 +400,6 @@ window.onclick = function(event) {
     if (event.target === modalInfo) {
         modalInfo.style.display = "none";
     }
-
-    // if (event.target === modalError) {
-    //     modalError.style.display = "none";
-    // }
 }
 
 if (isMineJs) {

@@ -14,8 +14,15 @@ let closeButtonTxt = document.getElementById('close-button-txt');
 let messageTxt = document.getElementById('message-txt');
 let modalConfirm = document.getElementById('modal-confirm');
 
+/**
+ * Array of lines connecting person with task.
+ * @type {*[]}
+ */
 let lines = [];
 
+/**
+ * Add listeners to items on the list to highlight on hover.
+ */
 let updateListeners = () => {
     list = document.getElementsByClassName('list-item');
     for (let element of list) {
@@ -30,7 +37,11 @@ let updateListeners = () => {
 };
 
 
-// add parameter to have one function if filter is applied
+/**
+ * Function to fetch list of people.
+ *
+ * @param name if null then get all people, if not then get people with name like specified
+ */
 let fetchListPeople = (name) => {
     // get people already used (ids)
     let peopleUsed = peopleContent.children;
@@ -79,6 +90,11 @@ let fetchListPeople = (name) => {
     });
 };
 
+/**
+ * Function which fetches list of tasks.
+ *
+ * @param name if null then get all tasks, if not then get tasks with name like specified
+ */
 let fetchListTasks = (name) => {
     // get tasks already used (ids)
     let tasksUsed = tasksContent.children;
@@ -131,6 +147,9 @@ let fetchListTasks = (name) => {
     });
 };
 
+/**
+ * Fetch list of people's names based on user's input.
+ */
 let fetchListPeopleSearch = () => {
     // get people already used (ids)
     let peopleUsed = peopleContent.children;
@@ -175,6 +194,9 @@ let fetchListPeopleSearch = () => {
     });
 };
 
+/**
+ * Fetch list of tasks' names and ids based on user's input.
+ */
 let fetchListTasksSearch = () => {
     // get tasks already used (ids)
     let tasksUsed = tasksContent.children;
@@ -450,6 +472,9 @@ generateAssign.addEventListener('click', () => {
 let peopleGraph = document.querySelector(".assigment-left");
 let tasksGraph = document.querySelector(".assigment-right");
 
+/**
+ * Function that adds click listeners to people items to add or delete person to container by clicking.
+ */
 // add to containers on click
 let updateListenersPeople = () => {
     //if (window.innerWidth <= 900) {
@@ -470,6 +495,9 @@ let updateListenersPeople = () => {
     //}
 };
 
+/**
+ * Function that adds click listeners to task items to add or delete task to container by clicking.
+ */
 let updateListenersTasks = () => {
     let listTasks = document.getElementsByClassName('task-item');
     for (let element of listTasks) {
