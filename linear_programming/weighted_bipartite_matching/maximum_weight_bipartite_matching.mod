@@ -1,5 +1,3 @@
-# Author: Aleksandra Gołębiowska, 2022
-# This is a part of my engineer thesis
 # Linear programming model solving maximum weight bipartite matching
 # Usage: glpsol -m maximum_weight_bipartite_matching.mod -d filename.dat
 # Data file format:

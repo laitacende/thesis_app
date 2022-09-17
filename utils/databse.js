@@ -1,3 +1,7 @@
+/**
+ * Connection to database config.
+ */
+
 // database connection
 const mariadb = require('mariadb');
 const defaultConn = mariadb.createPool({ // TODO change to default user with not many priviliges

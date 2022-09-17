@@ -1,5 +1,3 @@
-# Author: Aleksandra Gołębiowska, 2022
-# This is a part of my engineer thesis
 # Linear programming model solving minimum cost flow of graph given in data file
 # Usage: glpsol -m min_cost_flow.mod -d filename.dat
 # Data file format:

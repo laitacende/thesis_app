@@ -1,3 +1,35 @@
+/**
+ * GET queries:
+ * - "/" redirect to login page or home, if user already logged in,
+ * - "/home" render homepage,
+ * - "/profile?userId=_&displayBack=_" render page with profile of user with identifier
+ *    userId in database. Display back arrow (navigation) if parameter true,
+ * - "/task?id=_" render page with task details of task with id in database,
+ * - "/kanban?filter=_" render kanban (task board) page. Filter determines what
+ *    task will be displayed - options: "all" (display all), "mine" (only
+ *    assigned to current user), "none" (unassigned),
+ * - "/people" render page with list of people,
+ * - "/assignment" render page with generating the assignment,
+ * - "/people-search?username=?" obtain list (only usernames) with users whose names are like
+ *    this specified in username parameter,
+ * - "/people-search-request?search=_" render list (username, id, profile picture) with users
+ *    whose names are like this specified in username parameter,
+ * - "/skills-search?search=_"  obtain skills list (id, name) with skills which names are like
+ *    this specified in search parameter,
+ * - "/skills-list?userId=_" get skills list for user with userId,
+ * - "/delete-success" render page with deleting a task success,
+ * - "/new-task-success" render page with creating a new task success,
+ * - "/change-password" render page with form to change a password,
+ * - "/delete-success-profile" render page with deleting an account success,
+ * - "/people-list?search=_" obtain list (username, id, profile picture) with users
+ *    whose names are like this specified in username parameter,
+ * - "/tasks-list?search=_" obtain list of tasks with names likes this specified in
+ *    search parameter,
+ * - "/project-state" render page to simulate project feasibility in terms of time,
+ * - "/help" render page with help,
+ * - "/about" render page with description of the tool.
+ */
+
 const connections = require('./databse');
 const express = require('express');
 const router = express.Router();
