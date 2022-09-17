@@ -1,9 +1,17 @@
 const Queue = require("./structures/Queue");
 const Stack = require("./structures/Stack");
 const CircularList = require("./structures/CircularList");
-const PriorityQueue = require("./structures/PriorityQueue");
 const PriorityQueueDecreaseKey = require("./structures/PriorityQueueDecreaseKey");
 
+/**
+ * Implementation of breadth first search algorithm in residual graph.
+ * Can stop after reaching the target.
+ *
+ * @param graph graph to be explored
+ * @param source start node
+ * @param target identifier of node to be reached
+ * @returns {boolean} true if target was reached, false otherwise
+ */
 function bfsResidual(graph, source, target) {
     graph.nodes.forEach(node => {
         node.dist = Number.MAX_VALUE;
@@ -35,6 +43,13 @@ function bfsResidual(graph, source, target) {
     return false;
 }
 
+/**
+ * Function to update capacities in residual network according to flow on set path.
+ *
+ * @param graph graph
+ * @param min minimum capacity of the path, the flow will be augmented by this amount
+ * @param target endpoint of the augmenting path
+ */
 function updateResidualCapacities(graph, min, target) {
     // set residual edges capacities according to flow
     // if max capacity then there's only one edge in residual network to
@@ -43,15 +58,6 @@ function updateResidualCapacities(graph, min, target) {
     let curr = target;
     let prev = graph.nodes[curr].prev;
     while (prev !== curr) {
-        //console.log("ff: ", curr)
-        //augment flow
-        // if (graph.nodes[curr].adjacencyList.get(prev) === undefined) {
-        //     if (!graph.nodes[prev].adjacencyList.get(curr))
-        //     graph.nodes[prev].adjacencyList.get(curr).flow += min;
-        // } else {
-        //     console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
-        //     graph.nodes[curr].adjacencyList.get(prev).flow += min;
-        // }
         // from target to source
         if (graph.nodes[prev].adjacencyList.get(curr) === undefined) { // backward edge, give back flow
             graph.nodes[curr].adjacencyList.get(prev).flow -= min;
@@ -66,7 +72,13 @@ function updateResidualCapacities(graph, min, target) {
     }
 }
 
-
+/**
+ * Function to update capacities in residual network according to flow on set cycle.
+ *
+ * @param graph graph
+ * @param min minimum capacity of the path, the flow will be augmented by this amount
+ * @param target node in cycle
+ */
 function updateResidualCapacitiesCycle(graph, min, target) {
     // set residual edges capacities according to flow
     // if max capacity then there's only one edge in residual network to
@@ -91,6 +103,13 @@ function updateResidualCapacitiesCycle(graph, min, target) {
     }
 }
 
+/**
+ * Breadth first search algorithm implementation for leveled graph (used in Dinic's algorithm).
+ * @param graph leveled graph
+ * @param source start node
+ * @param target identifier of node to be reached
+ * @returns {boolean} true if target was reached, false otherwise
+ */
 function bfsLevel(graph, source, target) {
     graph.nodes.forEach(node => {
         node.dist = Number.MAX_VALUE;
@@ -126,6 +145,18 @@ function bfsLevel(graph, source, target) {
 
 }
 
+/**
+ * Depth first search algorithm recursive implementation.
+ * Can stop after reaching a target node. Augments flow on the found path to target and accordingly
+ * updates residual graph.
+ *
+ * @param graph graph to be explored
+ * @param node node currently explored
+ * @param source start node for exploration
+ * @param target endpoint for exploration
+ * @param flow current value of found flow
+ * @returns {number} value of the found flow
+ */
 function dfsRecursive(graph, node, source, target, flow) {
     if (graph.nodes[node].key === target) {
         return flow;
@@ -153,6 +184,16 @@ function dfsRecursive(graph, node, source, target, flow) {
     return 0;
 }
 
+/**
+ * Depth first search algorithm implementation modified to find alternating path to
+ * augment matching (used in Hungarian algorithm).
+ *
+ * @param graph graph
+ * @param source start point for alternating path
+ * @param destination destination of alternating path to find
+ * @param M current matching
+ * @returns {[Integer]} array representing found alternating path
+ */
 function dfsGetPath(graph, source, destination, M) { // find alternating path
     let path = [];
 
@@ -165,6 +206,17 @@ function dfsGetPath(graph, source, destination, M) { // find alternating path
     return path;
 }
 
+/**
+ * Exploration based on DFS to find an alternating path to augment matching.
+ *
+ * @param graph graph
+ * @param node current node to explore
+ * @param destination target node identifier
+ * @param path array of identifiers creating a path
+ * @param M current matching
+ * @param last indicates if last edge was in matching or not
+ * @returns {boolean} true if path led to destination, false otherwise
+ */
 // last - true if previous edge was matched, false otherwise
 function explorePath(graph, node, destination, path, M, last) {
     let toTarget = false;
@@ -178,26 +230,36 @@ function explorePath(graph, node, destination, path, M, last) {
             toTarget ||= explorePath(graph, neighbour.key, destination, path, M, !last);
         }
     });
+
     if (toTarget) {
         path.push(node);
     }
     return toTarget;
 }
 
+/**
+ * Function checks if given edge is in matching.
+ *
+ * @param M matching to be checked
+ * @param x endpoint of edge
+ * @param y endpoint of edge
+ * @returns {boolean} true if edge is in matching, false otherwise
+ */
 function isInMatchingUndirected(M, x, y) {
     for (const pair of M) {
         if ((pair.source === x && pair.destination === y) || (pair.source === y && pair.destination === x)) {
             return true;
         }
     }
-    return null;
+    return false;
 }
 
 /**
- * Bellman-Ford algorithm with FIFO to obtain distances to all nodes from source
- * The function sets only distance labels, it does not set predecessor of node on the path
- * @param graph
- * @param source
+ * Bellman-Ford algorithm with FIFO to obtain distances to all nodes from source.
+ * The function sets only distance labels, it does not set predecessor of node on the path.
+ *
+ * @param graph graph
+ * @param source identifier of node for which the distances of the shortest path are to be obtained
  * @return true if there is no negative cycle in graph, false otherwise
  */
 function fifoLabelCorrecting(graph, source) {
@@ -229,6 +291,16 @@ function fifoLabelCorrecting(graph, source) {
     return true;
 }
 
+/**
+ * Bellman-Ford algorithm with FIFO to obtain distances to all nodes from source in residual graph.
+ * The function sets only distance labels, it does not set predecessor of node on the path.
+ *
+ * @param graph graph
+ * @param source identifier of node for which the distances of the shortest path are to be obtained
+ * @param target identifier of target node
+ * @return true if there is no negative cycle in graph, false otherwise or if there was detected
+ * negative cycle
+ */
 function fifoLabelCorrectingResidual(graph, source, target) {
     // initialize
     graph.nodes.forEach(node => {
@@ -265,6 +337,15 @@ function fifoLabelCorrectingResidual(graph, source, target) {
     return reached;
 }
 
+/**
+ * Dial's algorithm implementation to obtain the shortest paths distances from given node
+ * to all nodes in graph.
+ *
+ * @param graph graph
+ * @param source identifier of node for which the distances of the shortest path are to be obtained
+ * @param target identifier of target node
+ * @return true target was reached, false otherwise
+ */
 // dial implementation, good if costs are not too high
 function dialResidual(graph, source, target) {
     let reached = false;
@@ -280,9 +361,7 @@ function dialResidual(graph, source, target) {
     graph.nodes[source].dist = 0;
     graph.nodes[source].prev = source;
     buckets.addToBucket(graph.nodes[source].dist, source);
-    // console.log("graph in here");
-    // graph.printGraphResidual();
-    // console.log("----")
+
     // find the shortest path from source to target in residual graph
     while (!(permanent === graph.vNo || buckets.ifAllEmpty())) {
         buckets.nextNotEmptyBucket();
@@ -305,9 +384,6 @@ function dialResidual(graph, source, target) {
                     graph.nodes[neighbour.key].dist = graph.nodes[node].dist + neighbour.cost;
                     graph.nodes[neighbour.key].prev = node;
 
-                    console.log("id ", graph.nodes[neighbour.key].dist % (max + 1), " dist ", graph.nodes[neighbour.key].dist,
-                        " max ", max)
-
                     // add to bucket or change bucket
                     if (prev === null) {
                         buckets.addToBucket(graph.nodes[neighbour.key].dist % (max + 1), neighbour.key);
@@ -324,6 +400,12 @@ function dialResidual(graph, source, target) {
     return reached;
 }
 
+/**
+ * Function to obtain maximum cost (weight) of edge in residual graph.
+ *
+ * @param graph graph
+ * @returns {number} maximum cost in graph
+ */
 function getMaxCost(graph) {
     let max = 0;
     graph.nodes.forEach(node => {
@@ -336,18 +418,25 @@ function getMaxCost(graph) {
     return max;
 }
 
-function getMinCost(graph) {
-    let min = null;
-    graph.nodes.forEach(node => {
-        node.adjacencyListResidual.forEach(neighbour => {
-            if (min === null || neighbour.cost < min) {
-                min = neighbour.cost;
-            }
-        });
-    });
-    return min;
-}
+// used in cost scalling
+// function getMinCost(graph) {
+//     let min = null;
+//     graph.nodes.forEach(node => {
+//         node.adjacencyListResidual.forEach(neighbour => {
+//             if (min === null || neighbour.cost < min) {
+//                 min = neighbour.cost;
+//             }
+//         });
+//     });
+//     return min;
+// }
 
+/**
+ * Bellman-Ford algorithm implementation to obtain the shortest path distance in residual graph.
+ *
+ * @param graph graph
+ * @param source identifier of node for which the distances of the shortest path are to be obtained
+ */
 function bellmanFord(graph, source) {
     graph.nodes.forEach(node => {
         node.dist = null;
@@ -384,10 +473,16 @@ function bellmanFord(graph, source) {
             }
         });
     });
-    return null;
-
 }
 
+/**
+ * FIFO label correcting algorithm to obtain the shortest path distances from given node to all
+ * nodes in graph.
+ *
+ * @param graph graph
+ * @param source identifier of node for which the distances of the shortest path are to be obtained
+ * @returns {null|Integer} key of node on the found cycle, null if no cycle was found
+ */
 function fifoLabelCorrectingResidualNegativeCycle(graph, source) {
     // initialize
     graph.nodes.forEach(node => {
@@ -437,6 +532,7 @@ function fifoLabelCorrectingResidualNegativeCycle(graph, source) {
     return null; // no negative cycle found
 }
 
+// doesn't work
 function dfs(graph, source, target) {
     let flow = 0;
     let stack = new Stack();
@@ -517,6 +613,11 @@ function dfs(graph, source, target) {
     return flow;
 }
 
+/**
+ * Function to obtain reduced costs.
+ *
+ * @param graph graph with distances set
+ */
 function reduceCosts(graph) {
     graph.nodes.forEach(node => {
         node.adjacencyListResidual.forEach(neighbour => {
@@ -535,6 +636,15 @@ function reduceCosts(graph) {
     });
 }
 
+/**
+ * Dijkstra algorithm implementation to obtain the shortest path distances on residual graph.
+ * Implementation with priority queue on binary heap.
+ *
+ * @param graph graph
+ * @param source identifier of node for which the distances of the shortest path are to be obtained
+ * @param target identifier of target node
+ * @return true target was reached, false otherwise
+ */
 function dijkstraResidual(graph, source, target) {
     let reached = false;
     graph.nodes.forEach(node => {
@@ -581,7 +691,6 @@ module.exports = {
     fifoLabelCorrecting,
     dialResidual,
     fifoLabelCorrectingResidual,
-    getMinCost,
     getMaxCost,
     fifoLabelCorrectingResidualNegativeCycle,
     bellmanFord,

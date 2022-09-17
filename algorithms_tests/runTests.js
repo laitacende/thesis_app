@@ -6,10 +6,38 @@ const {relaxationAlgorithmReducedCosts, relaxationAlgorithm} = require("../algor
 const {successiveShortestPathAlgorithm} = require("../algorithms/algorithms_implementations/successiveShortestPathAlgorithm");
 const {auctionAlgorithm, auctionAlgorithmPriorityQueue, auctionAlgorithmPriorityQueueDecreaseKey} = require("../algorithms/algorithms_implementations/auctionAlgorithm");
 
+/**
+ * Script to perform tests of algorithms on previously created test instances.
+ * Checks if all costs obtained by the algorithms are equal and prints
+ * information to stdout.
+ */
+
+/**
+ * Number of algorithms to be tested.
+ * @type {number}
+ */
 let size = 7;
+
+/**
+ * Array to store costs of matchings obtained by the algorithms.
+ * @type {[Integer]}
+ */
 let costs = new Array(size);
+
+/**
+ * Array of times of execution of the algorithms.
+ * @type {[number]}
+ */
 let time = new Array(size);
+
+/**
+ * Time when algorithm starts the execution.
+ */
 let startTime;
+
+/**
+ * Matching obtained by the algorithm.
+ */
 let M;
 
 for (let i = 0; i < size; i++) {

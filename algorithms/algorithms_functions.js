@@ -1,6 +1,13 @@
 const Stack = require("./structures/Stack");
 const utils = require("./utils");
 
+/**
+ * Dinics algorithm implementation. Finds maximum flow in a directed graph with source and target.
+ * @param graph directed graph
+ * @param source node which is the source of the flow
+ * @param target node which is the target of the flow
+ * @returns {number} value of maximum flow
+ */
 function dinics(graph, source, target) {
     let maxFlow = 0;
 
@@ -26,6 +33,13 @@ function dinics(graph, source, target) {
     return maxFlow;
 }
 
+/**
+ * Implementation of Edmonds-Karp algorithm. Solves maximum flow in a directed graph.
+ * @param graph directed graph
+ * @param source node which is the source of the flow
+ * @param target node which is the target of the flow
+ * @returns {number} value of maximum flow
+ */
 function edmondsKarp(graph, source, target) {
     let maxFlow = 0;
     // in the beginning flow of every arc is 0

@@ -1,11 +1,21 @@
-// parser which creates a graph from in file with model for linear program
-
 const fs = require("fs");
 const nReadlines = require('n-readlines');
 const Graph = require("../algorithms/structures/Graph");
 const MersenneTwister = require('mersenne-twister');
+
+/**
+ * Random numbers generator.
+ * @type {MersenneTwister}
+ */
 let generator = new MersenneTwister();
 
+/**
+ * Generate graph objects of class {@link Graph} from .dat file of the matching model.
+ *
+ * @param filePath path of file
+ * @param isDirected indicates if graph will be directed (true) or undirected (false)
+ * @returns {Graph} {@link Graph} objects generated from th given file
+ */
 function createGraphFromFileMatching(filePath, isDirected) {
     const graphLines = new nReadlines(filePath);
     let line;
@@ -46,8 +56,10 @@ function createGraphFromFileMatching(filePath, isDirected) {
 }
 
 /**
- * Function dumps graph to data file which can be used to solve with glpk solver (min cost flow).
- * @param fileName name of the file
+ * Function dumps graph to data file which can be used to solve with glpk solver (min cost flow model).
+ *
+ * @param fileName path to hte file
+ * @param graph graph to be dumped of class {@link Graph}
  */
 function dumpGraphToFileMinCostFlow(fileName, graph) {
     let content = "set N := ";
@@ -95,6 +107,12 @@ function dumpGraphToFileMinCostFlow(fileName, graph) {
     });
 }
 
+/**
+ * Function dumps graph to data file which can be used to solve with glpk solver (maximum bipartite matching model).
+ *
+ * @param fileName path to hte file
+ * @param graph graph to be dumped of class {@link Graph}
+ */
 function dumpGraphToFileMatching(fileName, graph) {
     let content = "set N1 := ";
     for (let i = 0; i < graph.vNo / 2; i++) {
@@ -129,6 +147,12 @@ function dumpGraphToFileMatching(fileName, graph) {
     });
 }
 
+/**
+ * Function gets cost and time obtained by GLPK solver from the output.
+ *
+ * @param outputPath path to the output file
+ * @returns {{cost: number, time: string}} object containing cost and time
+ */
 // get time and cost of matching from output of glpk
 function parseResultGLPK(outputPath) {
     const outputLines = new nReadlines(outputPath);
@@ -167,6 +191,13 @@ function generateTestCases(size, instances) {
     }
 }
 
+/**
+ * Function to get random integer in range - inclusive on both sides.
+ *
+ * @param min lower bound
+ * @param max upper bound
+ * @returns {number} random integer in specified range
+ */
 let getRandomInt = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
