@@ -1,3 +1,41 @@
+/**
+ * POST queries:
+ * - "/auth" check login credentials and log in user, body: login, password,
+ *   render index with errors or redirect to home, if login success,
+ * - "/new-password" change password, body: passwordOld, passwordNew, passwordRepeat,
+ *    render page with errors or success page,
+ * - "/profile-change-icon" change profile icon, body: iconName,
+ *   send message in form {msg: "OK" | "FAIL"},
+ * - "/reset-project" delete all tasks and assignments, send message in form {msg: "OK" | "FAIL"},
+ * - "/update-skill" update skill level of user, body: skillId, level,
+ *    send message in form {msg: "OK" | "FAIL"},
+ * - "/add-skill" add skill to user, body: skillName, send message in form {msg: "OK" | "FAIL"},
+ * - "/delete-skill" delete skill from user, body: skillId, send message in form {msg: "OK" | "FAIL"},
+ * - "/update-task-status" change task status, body: taskId, taskStatus ("todo" | "inprogress" | "done"),
+ *    send message in form {msg: "OK" | "FAIL"},
+ * - "/add-skill-to-task" add skill to task, body: skillName, taskId,
+ *    send message in form {msg: "OK", id: skillId} | {msg: "FAIL"},
+ * - "/delete-skill-task" delete skill from task, body: skillId, taskId,
+ *    send message in form {msg: "OK" | "FAIL"},
+ * - "/update-task" update task details, body: taskName, taskId, assignee, description, taskDate, taskTime,
+ *   send message in form {msg: "OK" | "FAIL"},
+ * - "/delete-task" delete task, body: taskId,  send message in form {msg: "OK" | "FAIL"},
+ * - "/add-skill-name" add new skill to database, body: skillName,
+ *   send message in form {msg: "OK", id: skillId} | {msg: "FAIL"},
+ * - "/add-task" add new task, body: taskName, assignee, description, taskDate, taskTime, skillsList,
+ *    send message in form {msg: "OK" | "FAIL"},
+ * - "/add-person" adds new user and generates password for them, body: name, surname,
+ *   send message in form {msg: "OK", password: pass, login: username} | {msg: "FAIL"},
+ * - "/delete-profile" delete user, send message in form {msg: "OK" | "FAIL"},
+ * - "/generate-assignment" generate optimal assignment, body: people, tasks, send result as matching
+ *   in form "{source: _, destination: _}",
+ * - "/update-assignment" update assigment, body: matching, send message in form {msg: "OK" | "FAIL"},
+ * - "/check-feasibility" check if projects can be finished on time with current human resources, body: people,
+ *    send list of tasks that cannot be done (tasksStop) and list of needed skills (skills) or message in
+ *    the form {msg: "FAIL"},
+ * - "/logout" log the user out, send message in form {msg: "OK" | "FAIL"}.
+ */
+
 const connections = require('./databse');
 const express = require('express');
 const {check, validationResult} = require("express-validator");
@@ -6,7 +44,6 @@ const validation = require("./validation");
 const ESAPI = require("node-esapi");
 const Graph = require("../algorithms/structures/Graph");
 const hungarian = require("../algorithms/algorithms_implementations/hungarianAlgorithm");
-const fs = require("fs");
 
 let min = (first, second) => {
     return first < second ? first : second;
