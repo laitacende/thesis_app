@@ -1,29 +1,42 @@
 const QueueNode = require("./QueueNode");
+const AbstractPriorityQueue = require("./AbstractPriorityQueue");
 
-class PriorityQueueDecreaseKeyMax {
-    heap = [];
-    maxSize;
-    heapSize;
+/**
+ * Class to represent maximum priority queue based on binary heap with Map structure to
+ * provide mapping between indexes in heap and keys of nodes.
+ */
+class PriorityQueueDecreaseKeyMax extends AbstractPriorityQueue {
+    // heap = [];
+    // maxSize;
+    // heapSize;
     indexes;
 
 
+    /**
+     * Main constructor. Initializes heap and Map.
+     * @param size maximum size of priority queue
+     */
     constructor(size) {
-        this.maxSize = size;
-        this.heapSize = 0;
+       super(size);
         for (let i = 1; i <= this.maxSize; i++) {
             this.heap.push(new QueueNode(0, 0));
         }
         this.indexes = new Map(); // map between keys in graph and position in heap array
     }
 
-    top() {
-        return this.heap[1];
-    }
+    // top() {
+    //     return this.heap[1];
+    // }
+    //
+    // empty() {
+    //     return this.heapSize === 0;
+    // }
 
-    empty() {
-        return this.heapSize === 0;
-    }
-
+    /**
+     * Function that adds element to priority queue. Sets the positions in map.
+     * @param key identifier of node to be added
+     * @param priority priority of element to be added
+     */
     insert(key, priority) {
         if (priority < 0 || this.heapSize === this.maxSize) {
             return;
@@ -40,6 +53,13 @@ class PriorityQueueDecreaseKeyMax {
         this.indexes.set(key, i);
     }
 
+    /**
+     * Function that decreases priority of node of given key.
+     * Searching for particular node is done in O(1) by using mapping provided in Map.
+     *
+     * @param key key of node to be updated
+     * @param newPriority new value of priority
+     */
     changePriority(key, newPriority) {
         let heapIndex = this.indexes.get(key);
         if (this.heap[heapIndex].priority < newPriority) {
@@ -54,6 +74,11 @@ class PriorityQueueDecreaseKeyMax {
         }
     }
 
+    /**
+     * Function that returns and deletes the top value from priority queue and updates Map.
+     *
+     * @returns {QueueNode} top node in priority queue (maximum)
+     */
     extractMax() {
         if (this.heapSize <= 0) {
             return new QueueNode(0, 0);
@@ -67,6 +92,11 @@ class PriorityQueueDecreaseKeyMax {
         return max;
     }
 
+    /**
+     * Function that modifies heap to satisfy heap's properties (down-heapify).
+     *
+     * @param i index of node from which heapify will be performed (1 to process the whole heap)
+     */
     heapify(i) {
         let largest = i;
         if (this.left(i) <= this.heapSize && this.heap[largest].priority < this.heap[this.left(i)].priority) {
@@ -83,17 +113,17 @@ class PriorityQueueDecreaseKeyMax {
         }
     }
 
-    parent(i) {
-        return i >> 1;
-    }
-
-    left(i) {
-        return i << 1;
-    }
-
-    right(i) {
-        return -(~(i << 1));
-    }
+    // parent(i) {
+    //     return i >> 1;
+    // }
+    //
+    // left(i) {
+    //     return i << 1;
+    // }
+    //
+    // right(i) {
+    //     return -(~(i << 1));
+    // }
 
     swap(i, j) {
         let tmp = this.heap[i];

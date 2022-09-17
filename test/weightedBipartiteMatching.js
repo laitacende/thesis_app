@@ -62,9 +62,9 @@ describe('Graph 1', () => {
         assert.equal(isEqual(relax.relaxationAlgorithm(g2), M), true);
     });
 
-    it('Relaxation reduced cost', () => {
-        assert.equal(isEqual(relax.relaxationAlgorithmReducedCosts(g2), M), true);
-    });
+    // it('Relaxation reduced cost', () => {
+    //     assert.equal(isEqual(relax.relaxationAlgorithmReducedCosts(g2), M), true);
+    // });
 
     it('Successive shortest path', () => {
         assert.equal(isEqual(spp.successiveShortestPathAlgorithm(g2), M), true);
@@ -80,6 +80,14 @@ describe('Graph 1', () => {
 
     it('Auction algorithm', () => {
         assert.equal(isEqual(auction.auctionAlgorithm(g2), M), true);
+    });
+
+    it('Auction algorithm priority queue', () => {
+        assert.equal(isEqual(auction.auctionAlgorithmPriorityQueue(g2), M), true);
+    });
+
+    it('Auction algorithm priority queue decrease key', () => {
+        assert.equal(isEqual(auction.auctionAlgorithmPriorityQueueDecreaseKey(g2), M), true);
     });
 
 });
@@ -151,12 +159,12 @@ describe('Graph 2', () => {
         cost4 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
     });
 
-    let M5 = relax.relaxationAlgorithmReducedCosts(g2);
-    // get cost of matching
-    let cost5 = 0;
-    M5.forEach(pair => {
-        cost5 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
-    });
+    // let M5 = relax.relaxationAlgorithmReducedCosts(g2);
+    // // get cost of matching
+    // let cost5 = 0;
+    // M5.forEach(pair => {
+    //     cost5 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
+    // });
 
     let M2 = spp.successiveShortestPathAlgorithm(g2);
     // get cost of matching
@@ -177,6 +185,20 @@ describe('Graph 2', () => {
     let cost7 = 0;
     M7.forEach(pair => {
         cost7 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
+    });
+
+    let M8 = auction.auctionAlgorithmPriorityQueue(g2);
+    // get cost of matching
+    let cost8 = 0;
+    M8.forEach(pair => {
+        cost8 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
+    });
+
+    let M9 = auction.auctionAlgorithmPriorityQueueDecreaseKey(g2);
+    // get cost of matching
+    let cost9 = 0;
+    M9.forEach(pair => {
+        cost9 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
     });
 
     // let M6 = spp.successiveShortestPathAlgorithmDial(g2);
@@ -214,6 +236,13 @@ describe('Graph 2', () => {
         assert.equal(cost7, 24);
     });
 
+    it('Auction algorithm priority queue', () => {
+        assert.equal(cost8, 24);
+    });
+
+    it('Auction algorithm priority queue decrease key', () => {
+        assert.equal(cost9, 24);
+    });
 });
 
 describe('Graph 3', () => {
@@ -264,12 +293,12 @@ describe('Graph 3', () => {
         cost4 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
     });
 
-    let M5 = relax.relaxationAlgorithmReducedCosts(g2);
-    // get cost of matching
-    let cost5 = 0;
-    M5.forEach(pair => {
-        cost5 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
-    });
+    // let M5 = relax.relaxationAlgorithmReducedCosts(g2);
+    // // get cost of matching
+    // let cost5 = 0;
+    // M5.forEach(pair => {
+    //     cost5 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
+    // });
 
     let M2 = spp.successiveShortestPathAlgorithm(g2);
     // get cost of matching
@@ -299,6 +328,20 @@ describe('Graph 3', () => {
         cost7 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
     });
 
+    let M8 = auction.auctionAlgorithmPriorityQueue(g2);
+    // get cost of matching
+    let cost8 = 0;
+    M8.forEach(pair => {
+        cost8 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
+    });
+
+    let M9 = auction.auctionAlgorithmPriorityQueueDecreaseKey(g2);
+    // get cost of matching
+    let cost9 = 0;
+    M9.forEach(pair => {
+        cost9 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
+    });
+
 
     it('Relaxation', () => {
         assert.equal(cost4, 16);
@@ -326,6 +369,14 @@ describe('Graph 3', () => {
 
     it('Auction algorithm', () => {
         assert.equal(cost7, 16);
+    });
+
+    it('Auction algorithm priority queue', () => {
+        assert.equal(cost8, 16);
+    });
+
+    it('Auction algorithm priority queue decrease key', () => {
+        assert.equal(cost9, 16);
     });
 
 });
@@ -449,6 +500,20 @@ describe('Graph 4', () => {
         cost7 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
     });
 
+    let M8 = auction.auctionAlgorithmPriorityQueue(g2);
+    // get cost of matching
+    let cost8 = 0;
+    M8.forEach(pair => {
+        cost8 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
+    });
+
+    let M9 = auction.auctionAlgorithmPriorityQueueDecreaseKey(g2);
+    // get cost of matching
+    let cost9 = 0;
+    M9.forEach(pair => {
+        cost9 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
+    });
+
 
     it('Relaxation', () => {
         assert.equal(cost4, 40);
@@ -476,5 +541,13 @@ describe('Graph 4', () => {
 
     it('Auction algorithm', () => {
         assert.equal(cost7, 40);
+    });
+
+    it('Auction algorithm priority queue', () => {
+        assert.equal(cost8, 40);
+    });
+
+    it('Auction algorithm priority queue decrease key', () => {
+        assert.equal(cost9, 40);
     });
 });

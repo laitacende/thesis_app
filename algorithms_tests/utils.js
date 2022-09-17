@@ -90,7 +90,7 @@ function dumpGraphToFileMinCostFlow(fileName, graph) {
 
     fs.writeFile(fileName + ".dat", content, err => {
         if (err) {
-            console.log("Could not dump graph to file.")
+            console.log("Could not dump graph to file. ", err);
         }
     });
 }
@@ -124,7 +124,7 @@ function dumpGraphToFileMatching(fileName, graph) {
 
     fs.writeFile(fileName + ".dat", content, err => {
         if (err) {
-            console.log("Could not dump graph to file.")
+            console.log("Could not dump graph to file. ", err)
         }
     });
 }

@@ -33,7 +33,7 @@ const utilsTests = require("../algorithms_tests/utils");
 //
 // });
 
-/*
+
 describe('Graph 1', () => {
     let g = new Graph(5, true);
     g.addEdge(0, 1, 1, 3);
@@ -133,4 +133,3 @@ describe('GraphDump', () => {
     });
 
 });
-*/
