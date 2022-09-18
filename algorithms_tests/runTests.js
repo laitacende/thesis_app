@@ -1,3 +1,4 @@
+const fs = require("fs");
 const utilsTest = require('./utils');
 const { performance } = require('perf_hooks');
 const {cycleCancellingAlgorithm} = require("../algorithms/algorithms_implementations/cycleCancellingAlgorithm");
@@ -5,6 +6,7 @@ const {hungarianAlgorithm} = require("../algorithms/algorithms_implementations/h
 const {relaxationAlgorithmReducedCosts, relaxationAlgorithm} = require("../algorithms/algorithms_implementations/relaxationAlgorithm");
 const {successiveShortestPathAlgorithm} = require("../algorithms/algorithms_implementations/successiveShortestPathAlgorithm");
 const {auctionAlgorithm, auctionAlgorithmPriorityQueue, auctionAlgorithmPriorityQueueDecreaseKey} = require("../algorithms/algorithms_implementations/auctionAlgorithm");
+const {parseResultGLPK} = require("./utils");
 
 /**
  * Script to perform tests of algorithms on previously created test instances.
@@ -45,15 +47,30 @@ for (let i = 0; i < size; i++) {
     time[i] = 0;
 }
 
-for (let i = 10; i <= 200; i = i + 10) {
+let timeGLPK = 0;
+let costGLPK = 0;
+
+let stream = fs.createWriteStream("./output/results.txt", {flags:'a'});
+
+for (let i = 2; i <= 200; i = i + 2) {
    // get graph from file
+    for (let i = 0; i < size; i++) {
+        time[i] = 0;
+    }
+    timeGLPK = 0;
+
     for (let j = 0; j < 10; j++) {
         for (let i = 0; i < size; i++) {
             costs[i] = 0;
         }
         let graphDirected = utilsTest.createGraphFromFileMatching("./test_instances/graph_" + i + "_" + j + ".dat", true);
         let graphUndirected = utilsTest.createGraphFromFileMatching("./test_instances/graph_" + i + "_" + j + ".dat", false);
-        // TODO get cost obtained by glpsol
+
+        // get cost obtained by glpsol
+        let result = parseResultGLPK("./glpsol_output/graph_" + i + "_" + j + ".dat.output");
+        costGLPK = result.cost;
+        timeGLPK += Number.parseFloat(result.time) * 1000;
+
         // run algorithms
 
         startTime = performance.now();
@@ -114,13 +131,26 @@ for (let i = 10; i <= 200; i = i + 10) {
 
         // check the correctness of costs
         console.log("size ", i, " instance ", j);
-        if (!(costs[0] === costs[1] && costs[1] === costs[2] && costs[2] === costs[3]
+        if (!(costGLPK === costs[0] && costs[0] === costs[1] && costs[1] === costs[2] && costs[2] === costs[3]
         && costs[3] === costs[4] && costs[4] === costs[5] && costs[5] === costs[6])) {
-            console.log("!!!FAIL -- ", costs[0], " ", costs[1], " ", costs[2], " ", costs[3],
+            console.log("!!!FAIL -- ", costGLPK, " ", costs[0], " ", costs[1], " ", costs[2], " ", costs[3],
                 " ", costs[4], " ", costs[5], " ", costs[6]);
         } else {
-            console.log("CORRECT -- ", costs[0], " ", costs[1], " ", costs[2], " ", costs[3],
+            console.log("CORRECT -- ", costGLPK, " ", costs[0], " ", costs[1], " ", costs[2], " ", costs[3],
                 " ", costs[4], " ", costs[5], " ", costs[6]);
         }
     }
+
+    let line = "";
+    for (let k = 0; k < size; k++) {
+        if (k !== size - 1) {
+            line += (time[k] / 10).toString() + " ";
+        } else {
+            line += (time[k] / 10).toString();
+        }
+    }
+   // fs.writeFileSync("./output/results.txt", (timeGLPK / 10).toString() + " " + line);
+    stream.write( i + " " + (timeGLPK / 10).toString() + " " + line + "\n");
 }
+
+stream.end();
