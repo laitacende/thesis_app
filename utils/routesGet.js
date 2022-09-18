@@ -574,7 +574,6 @@ router.get('/people-list', (req, res) => {
             query = ['%' + decodeURIComponent(req.query.search) + '%'];
         }
 
-        console.log(query);
         // get list of people in alphabetic order from database
         // TODO change to another connection
         try {

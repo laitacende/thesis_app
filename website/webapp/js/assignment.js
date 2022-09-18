@@ -247,11 +247,21 @@ dragula([document.querySelector('.drag-list-assigment'),
     document.querySelector('.assigment-right')], {
     accepts:
         function (el, target, source, sibling) {
-            if (target.classList.contains('assigment-left') &&  el.classList.contains('task-item')) {
+            if (target.classList.contains('assigment-left') && el.classList.contains('task-item')) {
                 return false;
             }
 
-            if (target.classList.contains('assigment-right') &&  el.classList.contains('profile-item')) {
+            if (target.classList.contains('assigment-right') && el.classList.contains('profile-item')) {
+                return false;
+            }
+
+            let active = document.querySelector('.active-card');
+
+            if (target === cardContent && active === peopleButton && source === tasksGraph) {
+                return false;
+            }
+
+            if (target === cardContent && active === taskButton && source === peopleGraph) {
                 return false;
             }
 
@@ -262,6 +272,15 @@ dragula([document.querySelector('.drag-list-assigment'),
     lines.forEach(line => {
        line.position();
     });
+}).on('drop', (el, target, source, sibling) => {
+    // check if element is put to container, if so delete according line
+    if (target === cardContent) {
+        lines.forEach(line => {
+            line.remove();
+        });
+
+        lines = [];
+    }
 });
 
 peopleButton.addEventListener('click', () => {
@@ -481,6 +500,12 @@ let updateListenersPeople = () => {
     let listPeople = document.getElementsByClassName('profile-item');
     for (let element of listPeople) {
         element.addEventListener('click', (event) => {
+            lines.forEach(line => {
+                line.remove();
+            });
+
+            lines = [];
+
             let active = document.querySelector('.active-card');
             // append to list if parent is assets
             if (element.parentNode === cardContent) {
@@ -502,6 +527,11 @@ let updateListenersTasks = () => {
     let listTasks = document.getElementsByClassName('task-item');
     for (let element of listTasks) {
         element.addEventListener('click', (event) => {
+            lines.forEach(line => {
+               line.remove();
+            });
+
+            lines = [];
             let active = document.querySelector('.active-card');
             // append to list if parent is assets
             if (element.parentNode === cardContent) {

@@ -1,6 +1,9 @@
-// TODO add too busy library, add Csurf
 console.log('Server is starting...');
 const path = require('path');
+
+const toobusy = require('toobusy-js');
+// https://www.npmjs.com/package/express-secure-headers
+const headerSecure = require('express-secure-headers');
 
 
 // initialize express
@@ -13,7 +16,7 @@ app.set('view engine', 'ejs')
 app.set('view cache', false);
 app.set('views', path.join(__dirname, 'website/webapp/views/'));
 // server listens to port 3000
-https
+let server = https
     .createServer({
             key: fs.readFileSync("sslcert/cert.key"),
             cert: fs.readFileSync("sslcert/cert.pem"),
@@ -38,8 +41,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(require('./utils/routesGet'));
 app.use(require('./utils/routesPost'));
+app.use((req, res, next) => {
+    if (toobusy()) {
+        res.status(503);
+        res.send("Serwer jest zajęty. Spróbuj później.");
+    } else {
+        next();
+    }
+});
+app.use(headerSecure);
 
 // body parser to parse POST request
 let bodyParser = require('body-parser');
 app.use(bodyParser.json({ limit: '50mb'}))
 app.use(bodyParser.urlencoded({ extended: false }));
+
+process.on('SIGINT', function() {
+    server.close();
+    // calling .shutdown allows your process to exit normally
+    toobusy.shutdown();
+    process.exit();
+});
