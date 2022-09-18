@@ -1,0 +1,106 @@
+GLPSOL: GLPK LP/MIP Solver, v4.65
+Parameter(s) specified in the command line:
+ -m ../linear_programming/weighted_bipartite_matching/maximum_weight_bipartite_matching.mod
+ -d ./test_instances/graph_16_3.dat
+Reading model section from ../linear_programming/weighted_bipartite_matching/maximum_weight_bipartite_matching.mod...
+47 lines were read
+Reading data section from ./test_instances/graph_16_3.dat...
+./test_instances/graph_16_3.dat:72: warning: final NL missing before end of file
+72 lines were read
+Generating obj...
+Generating c1...
+Generating c2...
+Model has been successfully generated
+GLPK Integer Optimizer, v4.65
+17 rows, 64 columns, 183 non-zeros
+64 integer variables, all of which are binary
+Preprocessing...
+16 rows, 64 columns, 128 non-zeros
+64 integer variables, all of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  1.000e+00  ratio =  1.000e+00
+Problem data seem to be well scaled
+Constructing initial basis...
+Size of triangular part is 15
+Solving LP relaxation...
+GLPK Simplex Optimizer, v4.65
+16 rows, 64 columns, 128 non-zeros
+      0: obj =   7.000000000e+00 inf =   6.000e+00 (1)
+     16: obj =   4.800000000e+01 inf =   0.000e+00 (0)
+*    30: obj =   6.800000000e+01 inf =   0.000e+00 (0)
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++    30: mip =     not found yet <=              +inf        (1; 0)
++    30: >>>>>   6.800000000e+01 <=   6.800000000e+01   0.0% (1; 0)
++    30: mip =   6.800000000e+01 <=     tree is empty   0.0% (0; 1)
+INTEGER OPTIMAL SOLUTION FOUND
+Time used:   0.0 secs
+Memory used: 0.2 Mb (238476 bytes)
+i    j    x[i, j]
+0    8    0    
+0    9    0    
+0    10   0    
+0    11   0    
+0    12   0    
+0    13   1    
+0    14   0    
+0    15   0    
+1    8    0    
+1    9    1    
+1    10   0    
+1    11   0    
+1    12   0    
+1    13   0    
+1    14   0    
+1    15   0    
+2    8    0    
+2    9    0    
+2    10   1    
+2    11   0    
+2    12   0    
+2    13   0    
+2    14   0    
+2    15   0    
+3    8    1    
+3    9    0    
+3    10   0    
+3    11   0    
+3    12   0    
+3    13   0    
+3    14   0    
+3    15   0    
+4    8    0    
+4    9    0    
+4    10   0    
+4    11   0    
+4    12   0    
+4    13   0    
+4    14   1    
+4    15   0    
+5    8    0    
+5    9    0    
+5    10   0    
+5    11   1    
+5    12   0    
+5    13   0    
+5    14   0    
+5    15   0    
+6    8    0    
+6    9    0    
+6    10   0    
+6    11   0    
+6    12   1    
+6    13   0    
+6    14   0    
+6    15   0    
+7    8    0    
+7    9    0    
+7    10   0    
+7    11   0    
+7    12   0    
+7    13   0    
+7    14   0    
+7    15   1    
+Cost: 68
+Model has been successfully processed

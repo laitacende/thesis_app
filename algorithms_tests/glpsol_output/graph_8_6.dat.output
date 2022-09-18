@@ -1,0 +1,58 @@
+GLPSOL: GLPK LP/MIP Solver, v4.65
+Parameter(s) specified in the command line:
+ -m ../linear_programming/weighted_bipartite_matching/maximum_weight_bipartite_matching.mod
+ -d ./test_instances/graph_8_6.dat
+Reading model section from ../linear_programming/weighted_bipartite_matching/maximum_weight_bipartite_matching.mod...
+47 lines were read
+Reading data section from ./test_instances/graph_8_6.dat...
+./test_instances/graph_8_6.dat:24: warning: final NL missing before end of file
+24 lines were read
+Generating obj...
+Generating c1...
+Generating c2...
+Model has been successfully generated
+GLPK Integer Optimizer, v4.65
+9 rows, 16 columns, 47 non-zeros
+16 integer variables, all of which are binary
+Preprocessing...
+8 rows, 16 columns, 32 non-zeros
+16 integer variables, all of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  1.000e+00  ratio =  1.000e+00
+Problem data seem to be well scaled
+Constructing initial basis...
+Size of triangular part is 7
+Solving LP relaxation...
+GLPK Simplex Optimizer, v4.65
+8 rows, 16 columns, 32 non-zeros
+      0: obj =   7.000000000e+00 inf =   2.000e+00 (1)
+      4: obj =   2.800000000e+01 inf =   0.000e+00 (0)
+*     9: obj =   3.700000000e+01 inf =   0.000e+00 (0)
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++     9: mip =     not found yet <=              +inf        (1; 0)
++     9: >>>>>   3.700000000e+01 <=   3.700000000e+01   0.0% (1; 0)
++     9: mip =   3.700000000e+01 <=     tree is empty   0.0% (0; 1)
+INTEGER OPTIMAL SOLUTION FOUND
+Time used:   0.0 secs
+Memory used: 0.1 Mb (143308 bytes)
+i    j    x[i, j]
+0    4    1    
+0    5    0    
+0    6    0    
+0    7    0    
+1    4    0    
+1    5    0    
+1    6    1    
+1    7    0    
+2    4    0    
+2    5    1    
+2    6    0    
+2    7    0    
+3    4    0    
+3    5    0    
+3    6    0    
+3    7    1    
+Cost: 37
+Model has been successfully processed

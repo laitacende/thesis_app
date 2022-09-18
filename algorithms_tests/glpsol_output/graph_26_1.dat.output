@@ -1,0 +1,211 @@
+GLPSOL: GLPK LP/MIP Solver, v4.65
+Parameter(s) specified in the command line:
+ -m ../linear_programming/weighted_bipartite_matching/maximum_weight_bipartite_matching.mod
+ -d ./test_instances/graph_26_1.dat
+Reading model section from ../linear_programming/weighted_bipartite_matching/maximum_weight_bipartite_matching.mod...
+47 lines were read
+Reading data section from ./test_instances/graph_26_1.dat...
+./test_instances/graph_26_1.dat:177: warning: final NL missing before end of file
+177 lines were read
+Generating obj...
+Generating c1...
+Generating c2...
+Model has been successfully generated
+GLPK Integer Optimizer, v4.65
+27 rows, 169 columns, 490 non-zeros
+169 integer variables, all of which are binary
+Preprocessing...
+26 rows, 169 columns, 338 non-zeros
+169 integer variables, all of which are binary
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  1.000e+00  ratio =  1.000e+00
+Problem data seem to be well scaled
+Constructing initial basis...
+Size of triangular part is 25
+Solving LP relaxation...
+GLPK Simplex Optimizer, v4.65
+26 rows, 169 columns, 338 non-zeros
+      0: obj =   1.080000000e+02 inf =   1.100e+01 (1)
+     31: obj =   5.500000000e+01 inf =   0.000e+00 (0)
+*    83: obj =   1.230000000e+02 inf =   0.000e+00 (0)
+OPTIMAL LP SOLUTION FOUND
+Integer optimization begins...
+Long-step dual simplex will be used
++    83: mip =     not found yet <=              +inf        (1; 0)
++    83: >>>>>   1.230000000e+02 <=   1.230000000e+02   0.0% (1; 0)
++    83: mip =   1.230000000e+02 <=     tree is empty   0.0% (0; 1)
+INTEGER OPTIMAL SOLUTION FOUND
+Time used:   0.0 secs
+Memory used: 0.4 Mb (459817 bytes)
+i    j    x[i, j]
+0    13   0    
+0    14   0    
+0    15   0    
+0    16   0    
+0    17   0    
+0    18   0    
+0    19   0    
+0    20   0    
+0    21   0    
+0    22   1    
+0    23   0    
+0    24   0    
+0    25   0    
+1    13   0    
+1    14   0    
+1    15   0    
+1    16   0    
+1    17   0    
+1    18   0    
+1    19   0    
+1    20   0    
+1    21   0    
+1    22   0    
+1    23   0    
+1    24   1    
+1    25   0    
+2    13   0    
+2    14   0    
+2    15   0    
+2    16   0    
+2    17   0    
+2    18   0    
+2    19   1    
+2    20   0    
+2    21   0    
+2    22   0    
+2    23   0    
+2    24   0    
+2    25   0    
+3    13   0    
+3    14   0    
+3    15   0    
+3    16   0    
+3    17   0    
+3    18   1    
+3    19   0    
+3    20   0    
+3    21   0    
+3    22   0    
+3    23   0    
+3    24   0    
+3    25   0    
+4    13   0    
+4    14   1    
+4    15   0    
+4    16   0    
+4    17   0    
+4    18   0    
+4    19   0    
+4    20   0    
+4    21   0    
+4    22   0    
+4    23   0    
+4    24   0    
+4    25   0    
+5    13   0    
+5    14   0    
+5    15   0    
+5    16   1    
+5    17   0    
+5    18   0    
+5    19   0    
+5    20   0    
+5    21   0    
+5    22   0    
+5    23   0    
+5    24   0    
+5    25   0    
+6    13   0    
+6    14   0    
+6    15   0    
+6    16   0    
+6    17   1    
+6    18   0    
+6    19   0    
+6    20   0    
+6    21   0    
+6    22   0    
+6    23   0    
+6    24   0    
+6    25   0    
+7    13   0    
+7    14   0    
+7    15   0    
+7    16   0    
+7    17   0    
+7    18   0    
+7    19   0    
+7    20   0    
+7    21   1    
+7    22   0    
+7    23   0    
+7    24   0    
+7    25   0    
+8    13   1    
+8    14   0    
+8    15   0    
+8    16   0    
+8    17   0    
+8    18   0    
+8    19   0    
+8    20   0    
+8    21   0    
+8    22   0    
+8    23   0    
+8    24   0    
+8    25   0    
+9    13   0    
+9    14   0    
+9    15   0    
+9    16   0    
+9    17   0    
+9    18   0    
+9    19   0    
+9    20   0    
+9    21   0    
+9    22   0    
+9    23   0    
+9    24   0    
+9    25   1    
+10   13   0    
+10   14   0    
+10   15   0    
+10   16   0    
+10   17   0    
+10   18   0    
+10   19   0    
+10   20   0    
+10   21   0    
+10   22   0    
+10   23   1    
+10   24   0    
+10   25   0    
+11   13   0    
+11   14   0    
+11   15   1    
+11   16   0    
+11   17   0    
+11   18   0    
+11   19   0    
+11   20   0    
+11   21   0    
+11   22   0    
+11   23   0    
+11   24   0    
+11   25   0    
+12   13   0    
+12   14   0    
+12   15   0    
+12   16   0    
+12   17   0    
+12   18   0    
+12   19   0    
+12   20   1    
+12   21   0    
+12   22   0    
+12   23   0    
+12   24   0    
+12   25   0    
+Cost: 123
+Model has been successfully processed

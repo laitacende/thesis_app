@@ -1,0 +1,9 @@
+set N1 := 0 ;
+
+set N2 := 1 ;
+
+param: cost := 
+0 1 3
+;
+
+end;
