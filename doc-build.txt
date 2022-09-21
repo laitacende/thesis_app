@@ -1,0 +1,1 @@
+documentation build ./src/ -o documentation -f "html"

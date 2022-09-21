@@ -6,6 +6,16 @@ const utils = require("../utils");
  * Base assigment is i to i + n/2.
  * Algorithm sets balances of nodes - first set to 1, second set to -1.
  *
+ * Time complexity:
+ * Establishing feasible flow O(n/2).
+ * Updating, constructing residual is O(n^2/4).
+ * FIFO label correcting algorithm O(VE) = O(n * n^2/4) = O(n^3/4).
+ * Maximum capacity of an arc is 1, maximum cost (absolute value) is 10.
+ * Maximum of the objective function is ECU, cycle cancelling algorithm decreases
+ * the objective function by strictly objective amount, data is integral so algorithm
+ * takes O(ECU) iterations, here O(E).
+ * Overall time complexity: O(n/2 + n^2/4 * n^3/4) = O(n^5).
+ *
  * @param graph bipartite directed graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
  * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
  */

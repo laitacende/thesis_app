@@ -7,6 +7,13 @@ const PriorityQueueMax = require("../structures/PriorityQueueMax");
  * Auction algorithm implementation based on https://agtb.wordpress.com/2009/07/13/auction-algorithm-for-bipartite-matching/.
  * Maximum c_{ij} - p_j is obtained by O(n/2) algorithm.
  *
+ * Time complexity:
+ * Maximum price some item can obtain is C = max_{i,j} w_{i,j}, in that case
+ * it is equal to 10.
+ * Total number of iterations is at most O(Cn^2)= = O(10n^2).
+ * One loop takes O(n/2) time.
+ * Overall O(10n^2*n/2) = O(n^3).
+ *
  * @param graph bipartite graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
  * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
  */
@@ -63,6 +70,14 @@ function auctionAlgorithm(graph) {
 /**
  * Auction algorithm implementation based on https://agtb.wordpress.com/2009/07/13/auction-algorithm-for-bipartite-matching/.
  * Each bidder has a priority queue, where priority is c_{ij} - p_j - used to obtain maximum in O(1).
+ *
+ * Time complexity:
+ * Building a heap O(n/2).
+ * Maximum price some item can obtain is C = max_{i,j} w_{i,j}, in that case
+ * it is equal to 10.
+ * Total number of iterations is at most O(Cn^2)= = O(10n^2).
+ * One loop takes: obtaining max O(1), changing priority is O(n/2 + log(n/2)).
+ * Overall time complexity is O(n/2 + 10n^2(n/2 + log(n/2) + 1) = O(10n^3/2 + 10n^2log(n/2) + 10n^2)=O(n^3).
  *
  * @param graph bipartite directed graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
  * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
@@ -126,6 +141,15 @@ function auctionAlgorithmPriorityQueue(graph) {
  * Auction algorithm implementation based on https://agtb.wordpress.com/2009/07/13/auction-algorithm-for-bipartite-matching/.
  * Each bidder has a priority queue, where priority is c_{ij} - p_j - used to obtain maximum in O(1).
  * Priority queue with map to speed up changing priority operation.
+ *
+ * Time complexity of Map should be sublinear.
+ * Time complexity:
+ * Building a heap O(n/2).
+ * Maximum price some item can obtain is C = max_{i,j} w_{i,j}, in that case
+ * it is equal to 10.
+ * Total number of iterations is at most O(Cn^2)= = O(10n^2).
+ * One loop takes: obtaining max O(1), changing priority is O(log(n/2)).
+ * Overall time complexity is O(n/2 + 10n^2(log(n/2) + 1) = O(10n^2log(n/2) + 10n^2) = O(10n^2log(n/2)).
  *
  * @param graph bipartite directed graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
  * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
