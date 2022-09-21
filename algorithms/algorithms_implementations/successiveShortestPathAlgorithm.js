@@ -5,6 +5,13 @@ const utils = require("../utils");
  * Algorithm based on description in "Network Flows. Theory, Algorithms and Applications",
  * Ahuja, Magnant, Orlin, section 12.4, p.471.
  * Uses FIFO label correcting algorithm to find the shortest paths.
+ *
+ * Time complexity:
+ * Augment 1 unit flow every iteration - assign one additional node in the first set.
+ * So this algorithm stops after O(n/2) iterations.
+ * One iteration takes O(n^3/4) (FIFO label correcting) + O(n) for updating residual capacities.
+ * Overall time complexity O(n/2 * (n^3/4 + n)) = O(n^4/8).
+ *
  * @param graph bipartite directed graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
  * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
  */
@@ -31,7 +38,7 @@ function successiveShortestPathAlgorithm(graph) {
     flowGraph.constructResidual();
 
     // look for the shortest path in the residual graph in terms of weight of edges
-    while (utils.fifoLabelCorrectingResidual(flowGraph, source, target)) {
+    while (utils.fifoLabelCorrectingResidual(flowGraph, source, target)) { // O(n^3/4)
         // augment flow along the found path
         // no need to find min, as it is 1 in assigment
         let min = null;

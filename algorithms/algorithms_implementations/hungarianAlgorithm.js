@@ -4,6 +4,15 @@ const utils = require("../utils");
  * Bipartite weighted maximum matching, required the same number of vertices in both sets
  * O(n^3) version based on http://www.columbia.edu/~cs2035/courses/ieor6614.S16/GolinAssignmentNotes.pdf
  *
+ * Set objects should be sublinear.
+ * Time complexity:
+ * Getting feasible labeling is O(V + E) = O(n/2 + n^2/4) = O(n^2).
+ * Checking if matching is perfect O(n).
+ * Checking if two sets equal O(n^2).
+ * In each phase matching cardinality increases by 1, so at most O(n) phases.
+ * Overall time complexity O(n^3).
+ *
+ *
  * @param graph bipartite undirected graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
  * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
  */
@@ -13,25 +22,25 @@ function hungarianAlgorithm(graph) {
     let half = graph.vNo / 2 - 1;
 
     // find feasible labeling
-    getFeasibleLabeling(graph);
-    let equalityGraph = graph.getEqualityGraph();
+    getFeasibleLabeling(graph); // O(n^2)
+    let equalityGraph = graph.getEqualityGraph(); // O(V+E) = O(n^2/4)
 
     // initial matching
-    M = getMatching(equalityGraph, graph);
+    M = getMatching(equalityGraph, graph); // O(n^2/4)
     let S = new Set(); // subset of vertices from the first set
     let T = new Set(); // alternating tree
     let root = -1;
     let it = 0;
     // check if matching is perfect
     let SNeighbours;
-    while (!isPerfectMatching(graph, M)) {
+    while (!isPerfectMatching(graph, M)) { // O(n)
         // M is not perfect, hence there is some exposed (not matched) node
         // augment path
         if (root === -1) {
             // find new exposed node in the first set
             let notSaturated = -1;
             let half = graph.vNo / 2 - 1;
-            for (let i = 0; i <= half; i++) {
+            for (let i = 0; i <= half; i++) { // O(n/2)
                 if (!graph.nodes[i].saturated) {
                     notSaturated = graph.nodes[i].key;
                     root = notSaturated;
@@ -42,12 +51,12 @@ function hungarianAlgorithm(graph) {
             T = new Set();
         }
         // get neighbours of S
-        SNeighbours = getNeighboursOfSet(equalityGraph, S);
-        if (isEqual(SNeighbours, T)) {
+        SNeighbours = getNeighboursOfSet(equalityGraph, S); // O(n^2/4)
+        if (isEqual(SNeighbours, T)) { // O(n^2)
             // update labels forcing SNeigbours !== T
             // alpha is minimum of l(x)+l(y)-c(x,y) of
             let alpha = null;
-            S.forEach(x => {
+            S.forEach(x => { // O(n) * O(n/2 * n) = O(n^3/2)
                 for (let i = half + 1; i < graph.vNo; i++) {
                     if (!T.has(i)) { // y not in T
                         let newAlpha = graph.nodes[x].label + graph.nodes[i].label - graph.nodes[x].adjacencyList.get(i).cost;
@@ -61,18 +70,18 @@ function hungarianAlgorithm(graph) {
                 // if v in S l'(v) = l(v) - alpha
                 // if v in T l'(v) = l(v) + alpha
                 // otherwise l'(v) = l(v)
-                for (let i = 0; i < graph.vNo; i++) {
+                for (let i = 0; i < graph.vNo; i++) { // O(n^2)
                     if (S.has(i)) {
                         graph.nodes[i].label =  graph.nodes[i].label - alpha;
                     } else if (T.has(i)) {
                         graph.nodes[i].label =  graph.nodes[i].label + alpha;
                     }
                 }
-                equalityGraph = graph.getEqualityGraph();
+                equalityGraph = graph.getEqualityGraph(); // O(n^2/4)
             }
         }
 
-        if (!isEqual(SNeighbours, T)) {
+        if (!isEqual(SNeighbours, T)) { // O(n^2)
             // pick y in SNeighbours / T
             let y = null;
             SNeighbours.forEach(key => {
@@ -82,19 +91,19 @@ function hungarianAlgorithm(graph) {
             });
             if (y !== null) {
                 T.add(y);
-                let z = checkWhereMatched(M, y);
+                let z = checkWhereMatched(M, y); // O(n)
                 // check if y is free  - then path from root to y is an augmenting path
                 if (z === null) {
                     // augment matching
                     // perform dfs on equality graph to find augmenting paths (ending in 'free' node)
-                    let path = utils.dfsGetPath(equalityGraph, root, y, M); // path to root
+                    let path = utils.dfsGetPath(equalityGraph, root, y, M); // path to root O(n^2/4)
                     for (let i = path.length - 1; i > 0; i--) {
                         let x = path[i];
                         let y = path[i - 1];
                         if (path[i] > graph.vNo / 2 - 1) {
                             [x, y] = [y, x]
                         }
-                        let pair = isInMatching(M, x, y);
+                        let pair = isInMatching(M, x, y); // O(n)
                         if (pair !== null) {
                             // remove
                             M.delete(pair);
@@ -173,6 +182,7 @@ function isPerfectMatching(graph, M) {
 
 /**
  * Function that returns a set of neighbours for given set of nodes.
+ *
  * @param graph
  * @param S set of nodes
  * @returns {Set<any>} set of neighbours of nodes in S
@@ -189,6 +199,7 @@ function getNeighboursOfSet(graph, S) {
 
 /**
  * Function that checks if two sets are equal.
+ *
  * @param a first set
  * @param b second set
  * @returns {boolean} true if sets are equal, false otherwise
@@ -207,6 +218,7 @@ function isEqual(a, b) {
 
 /**
  * Function that sets initial matching.
+ *
  * @param equalityGraph equality graph (only edges satisfying label(x) + label(y) == cost(x, y))
  * @param graph original graph
  * @returns {Set<any>} matching - set of edges in the form {source:key, destination: key}

@@ -7,6 +7,21 @@ const utils = require("../utils");
  * Choosing not matched and overassigned nodes is based on sets.
  * Calculating the shortest path using FIFO label correcting algorithm.
  *
+ * Time complexity:
+ * Constructing residual, getting copy with opposite costs O(n^2/4).
+ * Base assignment O(n^2/4).
+ * Searching for overassigned key O(n/2).
+ * Then operations for it:
+ *  - FIFO label correcting - O(n * n^2/4) = O(n^3/4)
+ *  - choosing node with no assignment O(n/2)
+ *  - updating residual network (follow the path) O(n)
+ * Getting matching O(n^2/4).
+ * Each iteration assigns one more node in the second ser and never converts any
+ * assigned node to unassigned node, hence algorithms stops within n/2 (number of vertices in the
+ * first set) iterations (all n/2S(n,m,C) = O(n/2 * n^3/4) = O(n^4/8)).
+ * Overall time complexity:
+ * O(n^2/4 + n/2 * (n/2 + n^3/4 + n/2 + n) + n^2/4) = O(n^4/8).
+ *
  * Time complexity of sets: time complexity https://stackoverflow.com/questions/31091772/javascript-es6-computational-time-complexity-of-collections
  * @param graph bipartite directed graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
  * @returns {Set<any>} matching in form of pairs {source: key, destination: key}

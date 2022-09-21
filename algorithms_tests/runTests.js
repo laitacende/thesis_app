@@ -52,7 +52,7 @@ let costGLPK = 0;
 
 let stream = fs.createWriteStream("./output/results.txt", {flags:'a'});
 
-for (let i = 2; i <= 200; i = i + 2) {
+for (let i = 550; i <= 1000; i = i + 50) {
    // get graph from file
     for (let i = 0; i < size; i++) {
         time[i] = 0;
@@ -63,8 +63,8 @@ for (let i = 2; i <= 200; i = i + 2) {
         for (let i = 0; i < size; i++) {
             costs[i] = 0;
         }
-        let graphDirected = utilsTest.createGraphFromFileMatching("./test_instances/graph_" + i + "_" + j + ".dat", true);
-        let graphUndirected = utilsTest.createGraphFromFileMatching("./test_instances/graph_" + i + "_" + j + ".dat", false);
+        let graphDirected = utilsTest.createGraphFromFileMatching("./test_instances_large/graph_" + i + "_" + j + ".dat", true);
+        let graphUndirected = utilsTest.createGraphFromFileMatching("./test_instances_large/graph_" + i + "_" + j + ".dat", false);
 
         // get cost obtained by glpsol
         let result = parseResultGLPK("./glpsol_output/graph_" + i + "_" + j + ".dat.output");
