@@ -76,8 +76,8 @@ function auctionAlgorithm(graph) {
  * Maximum price some item can obtain is C = max_{i,j} w_{i,j}, in that case
  * it is equal to 10.
  * Total number of iterations is at most O(Cn^2)= = O(10n^2).
- * One loop takes: obtaining max O(1), changing priority is O(n/2 + log(n/2)).
- * Overall time complexity is O(n/2 + 10n^2(n/2 + log(n/2) + 1) = O(10n^3/2 + 10n^2log(n/2) + 10n^2)=O(n^3).
+ * One loop takes: obtaining max O(1), changing priority is O(n/2(n/2 + log(n/2))) = O(n^2/4 + n/2log(n/2)).
+ * Overall time complexity is O(n/2 + 10n^2(n^2/4 + n/2log(n/2 + 1) = O(10n^4/8 + 10n^3/2log(n/2) + 10n^2)=O(n^4/8).
  *
  * @param graph bipartite directed graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
  * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
@@ -148,8 +148,8 @@ function auctionAlgorithmPriorityQueue(graph) {
  * Maximum price some item can obtain is C = max_{i,j} w_{i,j}, in that case
  * it is equal to 10.
  * Total number of iterations is at most O(Cn^2)= = O(10n^2).
- * One loop takes: obtaining max O(1), changing priority is O(log(n/2)).
- * Overall time complexity is O(n/2 + 10n^2(log(n/2) + 1) = O(10n^2log(n/2) + 10n^2) = O(10n^2log(n/2)).
+ * One loop takes: obtaining max O(1), changing priority for all bidders  is O(n/2log(n/2)).
+ * Overall time complexity is O(n/2 + 10n^2(n/2log(n/2) + 1) = O(5n^3log(n/2) + 10n^2) = O(5n^3log(n/2)).
  *
  * @param graph bipartite directed graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
  * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
