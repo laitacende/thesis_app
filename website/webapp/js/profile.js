@@ -144,13 +144,17 @@ let updateListeners = () => {
     }
 };
 
-closeInfo.addEventListener('click', () => {
-   modalInfo.style.display = "none";
-});
+if (closeInfo !== null) {
+    closeInfo.addEventListener('click', () => {
+        modalInfo.style.display = "none";
+    });
+}
 
-buttonInfo.addEventListener('click', () => {
-   modalInfo.style.display = "none";
-});
+if (buttonInfo !== null) {
+    buttonInfo.addEventListener('click', () => {
+        modalInfo.style.display = "none";
+    });
+}
 
 if (isMineJs) {
 
@@ -378,9 +382,11 @@ save.addEventListener('click', () => {
     });
 });
 
-document.getElementsByClassName('alert-icon')[0].addEventListener('click', () => {
-   modalInfo.style.display = "flex";
-});
+if (document.getElementsByClassName('alert-icon')[0] !== undefined) {
+    document.getElementsByClassName('alert-icon')[0].addEventListener('click', () => {
+        modalInfo.style.display = "flex";
+    });
+}
 
 let modalSkills = document.getElementById('modal-skills');
 

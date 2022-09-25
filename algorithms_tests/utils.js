@@ -187,7 +187,7 @@ function generateTestCases(size, instances) {
                graph.addEdge(i, j, 0, getRandomInt(0, 10));
            }
         }
-        dumpGraphToFileMatching("./test_instances_large/graph_" + size + "_" + i, graph);
+        dumpGraphToFileMatching("./test_instances_small_more/graph_" + size + "_" + i, graph);
     }
 }
 

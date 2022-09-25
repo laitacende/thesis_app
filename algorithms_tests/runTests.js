@@ -50,24 +50,24 @@ for (let i = 0; i < size; i++) {
 let timeGLPK = 0;
 let costGLPK = 0;
 
-let stream = fs.createWriteStream("./output/results.txt", {flags:'a'});
+let stream = fs.createWriteStream("./output/results_small_more.txt", {flags:'a'});
 
-for (let i = 550; i <= 1000; i = i + 50) {
+for (let i = 2; i <= 20; i = i + 2) {
    // get graph from file
     for (let i = 0; i < size; i++) {
         time[i] = 0;
     }
     timeGLPK = 0;
 
-    for (let j = 0; j < 10; j++) {
+    for (let j = 0; j < 100; j++) {
         for (let i = 0; i < size; i++) {
             costs[i] = 0;
         }
-        let graphDirected = utilsTest.createGraphFromFileMatching("./test_instances_large/graph_" + i + "_" + j + ".dat", true);
-        let graphUndirected = utilsTest.createGraphFromFileMatching("./test_instances_large/graph_" + i + "_" + j + ".dat", false);
+        let graphDirected = utilsTest.createGraphFromFileMatching("./test_instances_small_more/graph_" + i + "_" + j + ".dat", true);
+        let graphUndirected = utilsTest.createGraphFromFileMatching("./test_instances_small_more/graph_" + i + "_" + j + ".dat", false);
 
         // get cost obtained by glpsol
-        let result = parseResultGLPK("./glpsol_output/graph_" + i + "_" + j + ".dat.output");
+        let result = parseResultGLPK("./glpsol_output/small_more/graph_" + i + "_" + j + ".dat.output");
         costGLPK = result.cost;
         timeGLPK += Number.parseFloat(result.time) * 1000;
 
@@ -144,13 +144,13 @@ for (let i = 550; i <= 1000; i = i + 50) {
     let line = "";
     for (let k = 0; k < size; k++) {
         if (k !== size - 1) {
-            line += (time[k] / 10).toString() + " ";
+            line += (time[k] / 50).toString() + " ";
         } else {
-            line += (time[k] / 10).toString();
+            line += (time[k] / 50).toString();
         }
     }
    // fs.writeFileSync("./output/results.txt", (timeGLPK / 10).toString() + " " + line);
-    stream.write( i + " " + (timeGLPK / 10).toString() + " " + line + "\n");
+    stream.write( i + " " + (timeGLPK / 50).toString() + " " + line + "\n");
 }
 
 stream.end();

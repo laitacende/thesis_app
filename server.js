@@ -49,7 +49,7 @@ app.use((req, res, next) => {
         next();
     }
 });
-app.use(headerSecure);
+// app.use(headerSecure);
 
 // body parser to parse POST request
 let bodyParser = require('body-parser');
