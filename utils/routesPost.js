@@ -312,14 +312,12 @@ router.post('/add-skill', (req, res) => {
         let skillName = req.body.skillName;
         skillName = skillName.trim().toLowerCase();
         skillName = skillName.charAt(0).toUpperCase() + skillName.slice(1);
-        console.log(skillName);
         if (/^[a-zA-z\s\+]+$/.test(skillName)) {
             try {
                 // check if user in database
                 connections.defaultConn.query("CALL addSkill(?); CALL addSkillNameToUser(?, ?, 1); SELECT id FROM skills WHERE name=?", [skillName, req.session.userId, skillName, skillName])
                     .then((rows) => {
                         delete rows[2].meta;
-                        console.log(rows);
                         if (rows[2].length > 0) {
                             return res.send(JSON.stringify({msg: "OK", id: rows[2][0].id}));
                         } else {
@@ -414,7 +412,6 @@ router.post("/add-skill-to-task", (req, res) => {
                 // check if user in database
                 connections.defaultConn.query("CALL addSkill(?); CALL addSkillNameToTask(?, ?); SELECT id FROM skills WHERE name=?", [skillName, taskId, skillName, skillName])
                     .then((rows) => {
-                        console.log(rows)
                         delete rows[2].meta;
                         if (rows[2].length > 0) {
                             return res.send(JSON.stringify({msg: "OK", id: rows[2][0].id}));
@@ -745,7 +742,6 @@ router.post('/add-person', nameValidate, (req, res) => {
     if (req.session.loggedIn && req.session.privileged) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            console.log(errors);
             res.send({msg: "FAIL", errors: errors.array().map((el) => {
                     return el.msg;
                 })});
@@ -1024,31 +1020,33 @@ router.post('/check-feasibility', (req, res) => {
        let peopleIds = req.body.people;
        let tasksStop = [];
 
-       // check if all values are numeric
-       for (let i = 0; i < peopleIds.length; i++) {
-           if (isNaN(peopleIds[i]) || isNaN(parseFloat(peopleIds[i]))) {
-               return res.send(JSON.stringify({msg: "FAIL"}));
+       if (peopleIds.length !== 0) {
+
+           // check if all values are numeric
+           for (let i = 0; i < peopleIds.length; i++) {
+               if (isNaN(peopleIds[i]) || isNaN(parseFloat(peopleIds[i]))) {
+                   return res.send(JSON.stringify({msg: "FAIL"}));
+               }
            }
-       }
 
-       // build query
-       let query = 'SELECT work_time FROM users WHERE ';
-       let params = [];
+           // build query
+           let query = 'SELECT work_time FROM users WHERE ';
+           let params = [];
 
-       // quantitative metric
+           // quantitative metric
 
-       for (let i = 0; i < peopleIds.length; i++) {
-           if (i !== peopleIds.length - 1) {
-               query += 'id=? OR ';
-           } else {
-               query += 'id=?;'
+           for (let i = 0; i < peopleIds.length; i++) {
+               if (i !== peopleIds.length - 1) {
+                   query += 'id=? OR ';
+               } else {
+                   query += 'id=?;'
+               }
+               params.push(peopleIds[i]);
            }
-           params.push(peopleIds[i]);
-       }
 
-       try {
-           connections.defaultConn.query(query +
-               "SELECT id, name, DATE_FORMAT(deadline, '%d-%m-%y') AS deadline, estimated_time FROM tasks WHERE status <> 'done' ORDER BY deadline", params)
+           try {
+               connections.defaultConn.query(query +
+                   "SELECT id, name, DATE_FORMAT(deadline, '%d-%m-%y') AS deadline, estimated_time FROM tasks WHERE status <> 'done' ORDER BY deadline", params)
                    .then((rows) => {
                        for (let i = 0; i < rows.length; i++) {
                            delete rows[i].meta;
@@ -1099,7 +1097,6 @@ router.post('/check-feasibility', (req, res) => {
                            if (minutesTask !== 0) {
                                // not feasible to do, send info about which task needs to be delegated
                                tasksStop.push(tasks[i]);
-                               console.log(tasks[i]);
                                // rollback to the previous state when work flow was feasible
                                currentDate = previousDate;
                                availableMinutes = previousMinutes;
@@ -1146,16 +1143,16 @@ router.post('/check-feasibility', (req, res) => {
                                        for (let skill of rows) {
                                            skillsNames.push(skill.name);
                                        }
-
-                                       console.log(tasksStop);
-                                       console.log(skillsNames);
                                        return res.send(JSON.stringify({list: tasksStop, skills: skillsNames}));
                                    });
                            });
                    });
-       } catch (err) {
+           } catch (err) {
                res.status(500);
                return res.send(JSON.stringify({msg: "FAIL"}));
+           }
+       } else {
+           return res.send(JSON.stringify({msg: "FAIL"}));
        }
    } else {
        return res.send(JSON.stringify({msg: "FAIL"}));
