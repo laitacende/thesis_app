@@ -4,7 +4,8 @@ const PriorityQueueMax = require("../structures/PriorityQueueMax");
 
 /**
  * Solves maximum bipartite weighted matching.
- * Auction algorithm implementation based on https://agtb.wordpress.com/2009/07/13/auction-algorithm-for-bipartite-matching/.
+ * Auction algorithm implementation based on https://agtb.wordpress.com/2009/07/13/auction-algorithm-for-bipartite-matching/
+ * and https://web.mit.edu/dimitrib/www/Auction_Encycl.pdf.
  * Maximum c_{ij} - p_j is obtained by O(n/2) algorithm.
  *
  * Time complexity:

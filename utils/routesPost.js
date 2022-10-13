@@ -43,7 +43,7 @@ const router = express.Router();
 const validation = require("./validation");
 const ESAPI = require("node-esapi");
 const Graph = require("../algorithms/structures/Graph");
-const hungarian = require("../algorithms/algorithms_implementations/hungarianAlgorithm");
+const {auctionAlgorithm} = require("../algorithms/algorithms_implementations/auctionAlgorithm");
 
 let min = (first, second) => {
     return first < second ? first : second;
@@ -915,7 +915,6 @@ router.post('/generate-assigment', (req, res) => {
                     let size = peopleIds.length;
 
                     // create graph (beware that different algorithms need directed or undirected graph)
-                    //  TODO find out which method is the most sufficient one
                     let graph = new Graph( 2 * size, false);
 
                     // create edges (clique)
@@ -946,7 +945,7 @@ router.post('/generate-assigment', (req, res) => {
                     }
 
                     // perform algorithm, get matching
-                    let M = hungarian.hungarianAlgorithm(graph);
+                    let M = auctionAlgorithm(graph);
                     let matching = [];
 
                     M.forEach(match => {
