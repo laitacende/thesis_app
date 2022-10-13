@@ -15,7 +15,7 @@ const PriorityQueueMax = require("../structures/PriorityQueueMax");
  * One loop takes O(n/2) time.
  * Overall O(10n^2*n/2) = O(n^3).
  *
- * @param graph bipartite graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
+ * @param graph bipartite directed graph with nonnegative costs, first set indices 0..(n - 1), second set n..(2n - 1)
  * @returns {Set<any>} matching in form of pairs {source: key, destination: key}
  */
 // based on https://agtb.wordpress.com/2009/07/13/auction-algorithm-for-bipartite-matching/

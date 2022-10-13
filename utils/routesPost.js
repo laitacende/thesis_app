@@ -915,7 +915,7 @@ router.post('/generate-assigment', (req, res) => {
                     let size = peopleIds.length;
 
                     // create graph (beware that different algorithms need directed or undirected graph)
-                    let graph = new Graph( 2 * size, false);
+                    let graph = new Graph( 2 * size, true);
 
                     // create edges (clique)
                     for (let i = 0; i < size; i++) {
