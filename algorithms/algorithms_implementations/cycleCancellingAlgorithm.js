@@ -38,11 +38,12 @@ function cycleCancellingAlgorithm(graph) {
     // add new target and connect with 'clients'
     // use max flow algorithm to find feasible flow - not needed here, it is sufficient to get any matching
 
-    let graphFeasible = graphNegative.getCopyForMaxFlow();
-    if (graphFeasible == null) {
-        console.log("There is no feasible solution");
-        return null;
-    }
+    // not applicable here, instances always -b + b = 0
+    // let graphFeasible = graphNegative.getCopyForMaxFlow();
+    // if (graphFeasible == null) {
+    //     console.log("There is no feasible solution");
+    //     return null;
+    // }
 
     // get some matching - connect node i with node i + n/2 and saturate edges from source and to target
     for (let i = 0; i <= half; i++) {
