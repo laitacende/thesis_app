@@ -30,7 +30,6 @@ function hungarianAlgorithm(graph) {
     let S = new Set(); // subset of vertices from the first set
     let T = new Set(); // alternating tree
     let root = -1;
-    let it = 0;
     // check if matching is perfect
     let SNeighbours;
     while (!isPerfectMatching(graph, M)) { // O(n)
@@ -124,7 +123,6 @@ function hungarianAlgorithm(graph) {
                 }
             }
         }
-        it++;
     }
     return M;
 }

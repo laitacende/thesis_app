@@ -14,7 +14,7 @@ const utils = require("../utils");
  * Then operations for it:
  *  - FIFO label correcting - O(n * n^2/4) = O(n^3/4)
  *  - choosing node with no assignment O(n/2)
- *  - updating residual network (follow the path) O(n)
+ *  - updating residual network (follow the path) O(m)
  * Getting matching O(n^2/4).
  * Each iteration assigns one more node in the second ser and never converts any
  * assigned node to unassigned node, hence algorithms stops within n/2 (number of vertices in the

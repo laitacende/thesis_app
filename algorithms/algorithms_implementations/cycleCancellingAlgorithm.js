@@ -39,7 +39,7 @@ function cycleCancellingAlgorithm(graph) {
     // use max flow algorithm to find feasible flow - not needed here, it is sufficient to get any matching
 
     // not applicable here, instances always -b + b = 0
-    // let graphFeasible = graphNegative.getCopyForMaxFlow();
+     let graphFeasible = graphNegative.getCopyForMaxFlow();
     // if (graphFeasible == null) {
     //     console.log("There is no feasible solution");
     //     return null;

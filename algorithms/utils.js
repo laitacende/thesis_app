@@ -614,16 +614,18 @@ function dfs(graph, source, target) {
 }
 
 /**
- * Function to obtain reduced costs.
+ * Function to obtain reduced costs in residual network.
  *
  * @param graph graph with distances set
  */
 function reduceCosts(graph) {
     graph.nodes.forEach(node => {
         node.adjacencyListResidual.forEach(neighbour => {
-            neighbour.cost = neighbour.cost + node.dist - graph.nodes[neighbour.key].dist;
+            //neighbour.cost = neighbour.cost + node.dist - graph.nodes[neighbour.key].dist;
             if (node.dist && graph.nodes[neighbour.key].dist) {
                 neighbour.cost = neighbour.cost + node.dist - graph.nodes[neighbour.key].dist;
+            } else {
+               // neighbour.cost = -100
             }
             // if (neighbour.capacity !== 0) {
             //     if (!neighbour.isReversed) {
