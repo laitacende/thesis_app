@@ -640,6 +640,10 @@ textarea {
 }
 
 .help-section {
+  text-align: left;
+  text-justify: inter-word;
+  width: 97%;
+
   .header-help {
     font-size: 1.3em;
     margin-bottom: 0;
@@ -664,4 +668,36 @@ textarea {
   margin-top: 2em;
   font-size: 1.3em;
   color: $secondary-font-color;
+}
+
+
+.img-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 1em;
+  margin-left: .3em;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  img {
+    width: 47%;
+    margin: .5em;
+  }
+
+  .one {
+    width: 65%;
+  }
+}
+
+ol {
+  text-align: left;
+  text-justify: auto;
+  li a {
+    color: $tertiary-color;
+
+    &:hover {
+      color: $secondary-color;
+    }
+  }
 }

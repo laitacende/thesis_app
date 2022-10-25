@@ -50,24 +50,28 @@ for (let i = 0; i < size; i++) {
 let timeGLPK = 0;
 let costGLPK = 0;
 
-let stream = fs.createWriteStream("./output/results_small_more.txt", {flags:'a'});
+let stream = fs.createWriteStream("./output/results_etap_2.txt", {flags:'a'});
 
-for (let i = 2; i <= 20; i = i + 2) {
+let maxSize = 1002;
+let step = 50;
+let instancesNum = 10;
+
+for (let i = 2; i <= maxSize; i = i + step) {
    // get graph from file
     for (let i = 0; i < size; i++) {
         time[i] = 0;
     }
     timeGLPK = 0;
 
-    for (let j = 0; j < 100; j++) {
+    for (let j = 0; j < instancesNum; j++) {
         for (let i = 0; i < size; i++) {
             costs[i] = 0;
         }
-        let graphDirected = utilsTest.createGraphFromFileMatching("./test_instances_small_more/graph_" + i + "_" + j + ".dat", true);
-        let graphUndirected = utilsTest.createGraphFromFileMatching("./test_instances_small_more/graph_" + i + "_" + j + ".dat", false);
+        let graphDirected = utilsTest.createGraphFromFileMatching("./test_instances_etap_2/graph_" + i + "_" + j + ".dat", true);
+        let graphUndirected = utilsTest.createGraphFromFileMatching("./test_instances_etap_2/graph_" + i + "_" + j + ".dat", false);
 
         // get cost obtained by glpsol
-        let result = parseResultGLPK("./glpsol_output/small_more/graph_" + i + "_" + j + ".dat.output");
+        let result = parseResultGLPK("./glpsol_output/test_instances_etap_2/graph_" + i + "_" + j + ".dat.output");
         costGLPK = result.cost;
         timeGLPK += Number.parseFloat(result.time) * 1000;
 
@@ -139,18 +143,19 @@ for (let i = 2; i <= 20; i = i + 2) {
             console.log("CORRECT -- ", costGLPK, " ", costs[0], " ", costs[1], " ", costs[2], " ", costs[3],
                 " ", costs[4], " ", costs[5], " ", costs[6]);
         }
+
     }
 
     let line = "";
     for (let k = 0; k < size; k++) {
         if (k !== size - 1) {
-            line += (time[k] / 50).toString() + " ";
+            line += (time[k] / instancesNum).toString() + " ";
         } else {
-            line += (time[k] / 50).toString();
+            line += (time[k] / instancesNum).toString();
         }
     }
-   // fs.writeFileSync("./output/results.txt", (timeGLPK / 10).toString() + " " + line);
-    stream.write( i + " " + (timeGLPK / 50).toString() + " " + line + "\n");
+   fs.writeFileSync("./output/results.txt", (timeGLPK / 10).toString() + " " + line);
+   stream.write( i + " " + (timeGLPK / instancesNum).toString() + " " + line + "\n");
 }
 
 stream.end();

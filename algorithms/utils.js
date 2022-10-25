@@ -456,23 +456,6 @@ function bellmanFord(graph, source) {
            });
         });
     }
-
-    graph.nodes.forEach(node => {
-        node.adjacencyListResidual.forEach(neighbour => {
-            if (neighbour.capacity !== 0 && (graph.nodes[neighbour.key].dist === null || graph.nodes[neighbour.key].dist > node.dist + neighbour.cost)) {
-                let iter = true;
-                let curr = node.key;
-                let prev = node.prev;
-                while (iter < 7) {
-                    console.log(curr);
-                    curr = prev;
-                    prev = graph.nodes[curr].prev;
-                    iter++;
-                }
-                // return node.key;
-            }
-        });
-    });
 }
 
 /**

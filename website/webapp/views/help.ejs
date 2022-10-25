@@ -9,19 +9,71 @@
 <main>
 <!--    zawrzeć info co może admin -->
     <article class="main-container help-container">
-        <section class="help-section">
-            <h1 class="header-help">Tablica zadań</h1>
+        Spis treści
+        <ol>
+            <li><a href="#stats">Statystyki projektu</a></li>
+            <li><a href="#kanban">Tablica zadań</a></li>
+            <li><a href="#new-task">Dodawanie nowego zadania</a></li>
+            <li><a href="#task-info">Wyświetlanie szczegółów zadań</a></li>
+        </ol>
+        <section id="stats" class="help-section">
+            <h1 class="header-help">Statystyki projektu</h1>
+            Statystyki projektu widoczne są na stronie głównej, któr różni się elementami w zależności od roli
+            użytkownika. Dla wszystkich widoczna jest data zakończenia projektu (a), która jest najpóźniejszym
+            terminem wykonania wśród wszystkich zadań w projekcie. Stan projektu (b) jest dostępny jedynie dla
+            użytkowników o specjalnych uprawnieniach. Statystyki (c) informują kolejno ile zadań ma status
+            "Oczekujące", "W trakcie", "Zakończone". Stworzenie nowego projektu (d) jest opcją dla
+            uprzywilejowanych użytkowników i powoduje zresetowanie całego projektu, tzn. usunięcie wszystkcih zadań
+            i przydziałów.
+            <div class="img-container">
+                <img src="../img/help/1.png"  alt="Widok strony głównej dla uprzywilejowanego użytkownika"/>
+                <img src="../img/help/2.png" alt="Widok strony głównej dla normalnego użytkownika" />
+            </div>
         </section>
-        <section class="help-section">
+        <section id="kanban" class="help-section">
+            <h1 class="header-help">Tablica zadań</h1>
+            Zadania wyśtwietlane są w postaci kart na tablicy kanban podzielonej na trzy składowe:
+            zadania oczekujące (b), w trakcie (c) i zakończone (d). Przeciągniecie karty zadania do któegoś
+            z sektoru jest równoważne z zmianą jego statusu. Karty (e) zaweirają najbardziej
+            podstawowe informacje o zadaniu jak jego numer, nazwa, wykonawca oraz szacowany czas potrzebny
+            na wykonanie zadania. Po kliknięciu na "Szczegóły..." (f) wyświetlane są wszystkie informacje o zadaniu.
+            Wyświetlane zadania można filtrować za pomocą przyciskó (a). Domyślnie wyświetlane są wszystkie zadania
+            obecne w projekcie, ale można również wyświetlić tylko zadania pezypisane do siebie lub zadania
+            nieprzypisane.
+
+            <div class="img-container">
+                <img class="one" src="../img/help/3.png"  alt="Widok tablicy zadań"/>
+            </div>
+        </section>
+        <section id="new-task" class="help-section">
+            <h1 class="header-help">Dodawanie nowego zadania</h1>
+            Aby dodać nowe zadanie, należy kliknąć na przycisk w prawym dolnym rogu ekranu w widoku
+            tablicy kanban (a). Zostanie otwarte okno dialogowe z formularzem (b). Wszystkie pola oprócz wykonawcy,
+            opisu i umiejętności są obowiązkowe. Dodać umiejętność można poprzez kliknięcie "Dodaj nową umiejętność"
+            (c), co spowoduje otwarcie okna dialogowego. W pole (f) należy wpisać nazwę umiejetności. Jeśli
+            umiejętność jest już w bazie, to zostanie wyświetlona jako podpowiedź (g). Potwierdzenie dodania umiejetności
+            odbywa się poprzez kliknięcie przycisku "Zapisz" (h). Umiejętność będzie widoczna pod polami formularza. Aby ją
+            usuną wystarczy kliknąć na ikonkę "-" znajdującą się obok jej nazwy. Dodanie zadanie potweirdza sie poprzez
+            kliknięcie przycisku "Zapisz" (d), zaś anulowanie akcji "Anuluj" (e) lub przycisku "x" w prawym gónym rogu
+            okna dialogowego.
+            <div class="img-container">
+                <img src="../img/help/4.png"  alt="Dodanie nowego zadania, przycisk z plusem"/>
+                <img src="../img/help/5.png"  alt="Formularz nowego zadania"/>
+                <img src="../img/help/6.png"  alt="Formularz nowej umiejętności"/>
+                <img src="../img/help/7.png"  alt="Formularz nowej umiejętności"/>
+            </div>
+            </div>
+        </section>
+        <section id="task-info" class="help-section">
             <h1 class="header-help">Wyświetlanie szczegółów zadań</h1>
         </section>
-        <section class="help-section">
+        <section id="people-search" class="help-section">
             <h1 class="header-help">Wyszukiwanie profili innych osób</h1>
         </section>
-        <section class="help-section">
+        <section id="assignment" class="help-section">
             <h1 class="header-help">Generowanie przydziału</h1>
         </section>
-        <section class="help-section">
+        <section id="edit-profile" class="help-section">
             <h1 class="header-help">Edycja profilu</h1>
         </section>
     </article>

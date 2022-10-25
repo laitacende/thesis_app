@@ -8,6 +8,9 @@
 <main class="center">
     <article class="main-container">
         <%= msg %>
+        <% if (msg === "Wymagane jest zalogowanie się") { %>
+            <br> <a href='https://localhost:4000'>Przejdź do logowania</a>
+       <% }%>
     </article>
 </main>
 <script src="../js/main_panel.js"></script>

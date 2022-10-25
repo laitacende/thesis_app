@@ -281,7 +281,7 @@ save.addEventListener('click', () => {
     } else {
         assignee = assignee.replace(' ', "_");
     }
-
+    console.log(assignee)
     let time = document.getElementById('task-time').value;
     if (time.split(':').length !== 3 ) {
         time += ":00";

@@ -33,7 +33,7 @@
             <section class="inputs-column">
             <form id="edit-task-form" class="search-section" action="javascript:void(0);">
                 <input id="task-name" class="dark-input" name="name" type="text" placeholder="Nazwa zadania"/>
-                <input id="task-assignee" class="dark-input" name="assignee" type="text" placeholder="Wykonawca"/>
+                <input autocomplete="off" id="task-assignee" class="dark-input" name="assignee" type="text" placeholder="Wykonawca"/>
                 <div id="search-result-assignee"></div>
                 <input id="task-time" class="dark-input" name="time" type="text" placeholder="hh:mm"/>
                 <input id="task-date" class="dark-input" name="date" type="date"/>
@@ -67,7 +67,7 @@
         <div class="modal-content">
             <span id="close-new" class="close">&times;</span>
             <form id="search-skills-form" class="search-section" action="javascript:void(0);">
-                <input id="search-bar-skills" name="skillName" type="text" placeholder="Nazwa umiejętności"/>
+                <input autocomplete="off" id="search-bar-skills" name="skillName" type="text" placeholder="Nazwa umiejętności"/>
                 <div id="search-result"></div>
             </form>
             <button id="search-button-new" type="submit" form="search-skills-form" class="button button-add">Dodaj</button>

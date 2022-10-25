@@ -100,6 +100,7 @@ if (fob) {
 
    closeButtonInfo.addEventListener('click', () => {
       modalInfo.style.display = "none";
+      window.location.reload();
    });
 
    addSave.addEventListener('click', () => {
@@ -123,7 +124,6 @@ if (fob) {
                    "<br>Hasło: " + response.password;
                modalInfo.style.display = "flex";
                modalPerson.style.display = "none";
-               window.location.reload();
             } else if (response.msg === "FAIL") {
                // display modal error
                // set message

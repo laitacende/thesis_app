@@ -342,5 +342,15 @@
     margin-top: 1em;
     text-align: left;
   }
+
+  .img-container {
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+
+    img {
+      width: 80%;
+    }
+  }
 }
 

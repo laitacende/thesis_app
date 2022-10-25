@@ -554,6 +554,7 @@ router.post('/delete-task', (req, res) => {
            try {
                connections.defaultConn.query("DELETE from skills_tasks WHERE id_task=?; DELETE FROM tasks WHERE id=?", [taskId, taskId])
                    .then((result) => {
+                       console.log(result);
                        if (result[0].affectedRows === 1) {
                            return res.send(JSON.stringify({msg: "OK"}));
                        } else {
@@ -612,7 +613,7 @@ router.post('/add-skill-name', (req, res) => {
 
 let taskValidateAdd = [
     check('taskName').trim().escape().isLength({min: 1, max: 500}).withMessage('Nazwa musi mieć co najmniej jeden znak').matches('[A-Za-z\s]+').withMessage('Nazwa może składać się tylko z liter i spacji'),
-    check('assignee').trim().escape().matches('[A-za-z]+_[A-za-z]|NULL').withMessage('Nieprawdiłowy format loginu'),
+    check('assignee').trim().escape().matches('[A-za-zĄĘĆŻŹŁŃÓŚąęćźłńó]+_[A-za-zĄĘĆŻŹŁŃÓŚąęćźłńó]|NULL').withMessage('Nieprawdiłowy format loginu'),
     check('description').trim().escape().isLength({max: 1000}),
     check('taskDate').trim().escape().matches("[0-9][0-9]-[0-9][0-9]-[0-9][0-9]").withMessage('Nieprawdiłowy format daty'),
     check('taskTime').trim().escape().matches("[0-9][0-9]:[0-9][0-9]:00").withMessage('Nieprawidłowy format czasu')
