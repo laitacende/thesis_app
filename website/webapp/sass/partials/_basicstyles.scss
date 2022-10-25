@@ -701,3 +701,11 @@ ol {
     }
   }
 }
+
+.help-href {
+  color: $tertiary-color;
+
+  &:hover {
+    color: $secondary-color;
+  }
+}

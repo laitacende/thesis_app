@@ -4,10 +4,10 @@
 
 // database connection
 const mariadb = require('mariadb');
-const defaultConn = mariadb.createPool({ // TODO change to default user with not many priviliges
+const defaultConn = mariadb.createPool({
     host: 'localhost',
-    user:'root',
-    password: 'haslo',
+    user:'webapp_admin',
+    password: 'haslo123',
     database: 'webapp',
     connectionLimit: 5,
     multipleStatements: true, // can write queries like SELECT 1; SELECT 2;

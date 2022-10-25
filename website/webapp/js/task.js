@@ -154,6 +154,7 @@ inputAssignee.addEventListener('keyup', () => {
 });
 
 document.getElementById('new-skill').addEventListener('click', () => {
+    document.getElementById("search-bar-skills").value = "";
     modalNewSkill.style.display = "flex";
 });
 

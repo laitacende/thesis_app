@@ -7,18 +7,19 @@
 <%- include('./partials/navbar.ejs', {page: 'help'}) %>
 <div class="filler"></div>
 <main>
-<!--    zawrzeć info co może admin -->
     <article class="main-container help-container">
         Spis treści
         <ol>
             <li><a href="#stats">Statystyki projektu</a></li>
             <li><a href="#kanban">Tablica zadań</a></li>
             <li><a href="#new-task">Dodawanie nowego zadania</a></li>
-            <li><a href="#task-info">Wyświetlanie szczegółów zadań</a></li>
+            <li><a href="#task-info">Wyświetlanie szczegółów zadania, edycja i usunięcie zadania</a></li>
+            <li><a href="#people-search">Wyszukiwanie profili innych osób</a></li>
+            <li><a href="#new-person">Dodawanie nowego użytkownika</a></li>
         </ol>
         <section id="stats" class="help-section">
             <h1 class="header-help">Statystyki projektu</h1>
-            Statystyki projektu widoczne są na stronie głównej, któr różni się elementami w zależności od roli
+            Statystyki projektu widoczne są na stronie głównej, która różni się elementami w zależności od roli
             użytkownika. Dla wszystkich widoczna jest data zakończenia projektu (a), która jest najpóźniejszym
             terminem wykonania wśród wszystkich zadań w projekcie. Stan projektu (b) jest dostępny jedynie dla
             użytkowników o specjalnych uprawnieniach. Statystyki (c) informują kolejno ile zadań ma status
@@ -55,26 +56,49 @@
             odbywa się poprzez kliknięcie przycisku "Zapisz" (h). Umiejętność będzie widoczna pod polami formularza. Aby ją
             usuną wystarczy kliknąć na ikonkę "-" znajdującą się obok jej nazwy. Dodanie zadanie potweirdza sie poprzez
             kliknięcie przycisku "Zapisz" (d), zaś anulowanie akcji "Anuluj" (e) lub przycisku "x" w prawym gónym rogu
-            okna dialogowego.
+            okna dialogowego. Po pomyślnym utworzeniu zadania wyświetlona zostanie infromacja.
             <div class="img-container">
                 <img src="../img/help/4.png"  alt="Dodanie nowego zadania, przycisk z plusem"/>
                 <img src="../img/help/5.png"  alt="Formularz nowego zadania"/>
                 <img src="../img/help/6.png"  alt="Formularz nowej umiejętności"/>
-                <img src="../img/help/7.png"  alt="Formularz nowej umiejętności"/>
-            </div>
+                <img src="../img/help/7.png"  alt="Sukces w dodaniu zadania"/>
             </div>
         </section>
         <section id="task-info" class="help-section">
-            <h1 class="header-help">Wyświetlanie szczegółów zadań</h1>
+            <h1 class="header-help">Wyświetlanie szczegółów zadania, edycja i usunięcie zadania</h1>
+            Po kliknięciu w szczególy zadania (patrz <a class="help-href" href="#kanban">tutaj</a> jak to zrobić) wyświetlana
+            jest strona z wszystkimi informacjami o zadaniu. W górnym prawym rogu znajdują się opcje zadania: "Edytuj" (a) oraz
+            "Usuń zadanie" (b). Kliknięcie na przycisk "Edytuj" otwiera okno dialogowe z polami, które można zmieniać.
+            Aby zapisać zmiany, należy kliknąć "Zapisz" (c). Kliknięcie przycisku "Usuń zadanie" otwiera okno dialogowe z
+            potwierdzeniem wyboru. Po kliknięciu "Tak" (d) zadanie jest usuwane z bazy, "Nie" (e) anuluje akcję.
+            Po pomyślnym usunięciu zadania wyświetlana jest informacja.
+
+            <div class="img-container">
+                <img src="../img/help/8.png"  alt="Wyświetlanie szczegółów zadania"/>
+                <img src="../img/help/9.png"  alt="Edycja zadania"/>
+                <img src="../img/help/10.png"  alt="Usuwanie zadania"/>
+                <img src="../img/help/11.png"  alt="Sukces w usunięciu zadania"/>
+            </div>
         </section>
         <section id="people-search" class="help-section">
             <h1 class="header-help">Wyszukiwanie profili innych osób</h1>
+            Zobaczenie listy wszystkich użytkowników jest możliwe dzięki podstronie "Osoby". Aby wyszukać
+            konretnego użytkownika można użyć wyszukiwarki (a), która również zaweira listę podpowiedzi (b)
+            składającą się z użytkowników w bazie. Użytkownicy wyświetlani są w formie ikon z imieniem
+            i nazwiskiem (c), które można kliknąć, aby przenieść się na stronę z profilem wybranego
+            użytkownika.
+            <div class="img-container">
+                <img class="one" src="../img/help/12.png"  alt="Widok wszystkich użytkowników"/>
+            </div>
         </section>
-        <section id="assignment" class="help-section">
-            <h1 class="header-help">Generowanie przydziału</h1>
+        <section id="new-person" class="help-section">
+            <h1 class="header-help">Dodawanie nowego użytkownika</h1>
         </section>
         <section id="edit-profile" class="help-section">
             <h1 class="header-help">Edycja profilu</h1>
+        </section>
+        <section id="assignment" class="help-section">
+            <h1 class="header-help">Generowanie przydziału</h1>
         </section>
     </article>
 </main>
