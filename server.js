@@ -2,8 +2,6 @@ console.log('Server is starting...');
 const path = require('path');
 
 const toobusy = require('toobusy-js');
-// https://www.npmjs.com/package/express-secure-headers
-const headerSecure = require('express-secure-headers');
 
 
 // initialize express
@@ -29,13 +27,11 @@ let server = https
 
 // host static files
 app.use(express.static(path.join(__dirname, 'website/webapp')));
-app.use(express.static(path.join(__dirname, 'node_modules/dragula')));
 app.use(session({
     secret: 'secret',
     resave: true,
     saveUninitialized: true,
     key: 'sessionid',
-    // cookie: { secure: true, httpOnly: true, path: '/user', sameSite: true }
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -49,7 +45,6 @@ app.use((req, res, next) => {
         next();
     }
 });
-// app.use(headerSecure);
 
 // body parser to parse POST request
 let bodyParser = require('body-parser');

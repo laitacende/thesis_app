@@ -1,4 +1,4 @@
-var Neighbour = require("./Neighbour");
+const Neighbour = require("./Neighbour");
 
 /**
  * Class which represents a node in graph.

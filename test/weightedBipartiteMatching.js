@@ -1,10 +1,12 @@
 const assert = require('assert');
 const Graph = require("../algorithms/structures/Graph");
+const GraphClean = require("../algorithms/structures/GraphClean");
 const hungarian_algorithm = require("../algorithms/algorithms_implementations/hungarianAlgorithm");
 const spp = require("../algorithms/algorithms_implementations/successiveShortestPathAlgorithm");
 const cc = require("../algorithms/algorithms_implementations/cycleCancellingAlgorithm");
 const relax = require("../algorithms/algorithms_implementations/relaxationAlgorithm");
 const auction = require("../algorithms/algorithms_implementations/auctionAlgorithm");
+const NeighbourClean = require("../algorithms/structures/NeighbourClean");
 
 function isEqual(a, b) {
     if (a.size !== b.size) {
@@ -48,6 +50,28 @@ describe('Graph 1', () => {
     g2.setBalance(4, -1);
     g2.setBalance(5, -1);
 
+    let gClean = new GraphClean(6);
+    gClean.addEdge(0, 3,  1);
+    gClean.addEdge(0, 4,  6);
+    gClean.addEdge(0, 5,  0);
+    gClean.addEdge(1, 3,  0);
+    gClean.addEdge(1, 4,  8);
+    gClean.addEdge(1, 5,  6);
+    gClean.addEdge(2, 3,  4);
+    gClean.addEdge(2, 4,  0);
+    gClean.addEdge(2, 5,  1);
+
+    let gArr = new Array(3 * 3); // half * half
+    gArr[0] = new NeighbourClean(3 ,1); // 0, 3
+    gArr[1] =  new NeighbourClean(4, 6);
+    gArr[2] =  new NeighbourClean(5, 0);
+    gArr[3] =  new NeighbourClean(3, 0);
+    gArr[4] =  new NeighbourClean(4, 8);
+    gArr[5] =  new NeighbourClean(5, 6);
+    gArr[6] =   new NeighbourClean(3, 4);
+    gArr[7] =  new NeighbourClean(4, 0);
+    gArr[8] =  new NeighbourClean(5, 1);
+
     let M = new Set();
     M.add({source: 0, destination: 4});
     M.add({source: 1, destination: 5});
@@ -80,6 +104,14 @@ describe('Graph 1', () => {
 
     it('Auction algorithm', () => {
         assert.equal(isEqual(auction.auctionAlgorithm(g2), M), true);
+    });
+
+    it('Auction algorithm Clean', () => {
+        assert.equal(isEqual(auction.auctionAlgorithm(gClean), M), true);
+    });
+
+    it('Auction algorithm array', () => {
+        assert.equal(isEqual(auction.auctionAlgorithmArray(gArr, 6), M), true);
     });
 
     it('Auction algorithm priority queue', () => {
@@ -314,7 +346,7 @@ describe('Graph 3', () => {
     //     cost6 += g2.nodes[pair.source].adjacencyList.get(pair.destination).cost;
     // });
 
-    let M3 = spp.successiveShortestPathAlgorithm(g2);
+    let M3 = cc.cycleCancellingAlgorithm(g2);
     // get cost of matching
     let cost3 = 0;
     M3.forEach(pair => {

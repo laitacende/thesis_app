@@ -210,8 +210,60 @@ function auctionAlgorithmPriorityQueueDecreaseKey(graph) {
     return M;
 }
 
+// in here graph is one-dimensiaonal array of Neighbour class
+function auctionAlgorithmArray(graph, size) {
+    // owners are the nodes from the first set and goods are the nodes from the second set
+    // here vertices from N_2
+    let half = size / 2;
+    let prices = new Array(half);
+    let owners = new Array(half);
+
+
+    let queue = new Queue();
+    // add bidders
+    for (let i = 0; i < half; i++) {
+        queue.push(i);
+    }
+
+    let delta = 1 / (size / 2 + 1);
+
+    let bidder;
+    while(!queue.empty()) {
+        bidder = queue.pop();
+
+        // get j that maximizes cij - pj
+        let max = null;
+        let indexMax;
+        for (let i = half * bidder; i < half * bidder  + half; i++) {
+            if (max === null || max < graph[i].cost - prices[graph[i].key - half]) {
+                max = graph[i] - prices[graph[i].key - half];
+                indexMax = graph[i].key;
+            }
+        }
+
+        if (max >= 0) {
+            if (owners[indexMax - half] !== null) {
+                // enqueue current owner
+                queue.push(owners[indexMax - half]);
+            }
+            owners[indexMax - half] = bidder;
+            prices[indexMax - half] += delta;
+        }
+    }
+
+    // get matching from pairs (j, owner of j)
+    let M = new Set();
+    for (let i = 0; i < half; i++) {
+        M.add({source: owners[i], destination: i + half});
+    }
+    return M;
+}
+
+
+
 module.exports = {
     auctionAlgorithm,
     auctionAlgorithmPriorityQueue,
-    auctionAlgorithmPriorityQueueDecreaseKey
+    auctionAlgorithmPriorityQueueDecreaseKey,
+    auctionAlgorithmArray
 };
